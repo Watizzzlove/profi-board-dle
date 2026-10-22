@@ -160,13 +160,31 @@
             </div>
 
             <div class="catalog-sort">
-              <span style="color: var(--text-muted);">Сортировка:</span>
-              <select id="sortSelect" onchange="applyCatalogFilters()">
-                <option value="default">По популярности</option>
-                <option value="cheap">Сначала дешевле</option>
-                <option value="expensive">Сначала дороже</option>
-                <option value="vip">Сначала VIP</option>
-              </select>
+              <span style="color: var(--text-muted); font-size: 14px;">Сортировка:</span>
+              <div class="custom-select" id="catalogSortSelect">
+                <button type="button" class="custom-select__trigger" id="sortTriggerBtn" onclick="toggleSortDropdown(event)">
+                  <span id="sortCurrentLabel">По популярности</span>
+                  <svg class="custom-select__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="custom-select__dropdown" id="sortDropdownMenu">
+                  <div class="custom-select__option active" data-value="default" onclick="selectSortOption('default', 'По популярности', this)">
+                    <span>По популярности</span>
+                    <svg class="custom-select__check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="custom-select__option" data-value="cheap" onclick="selectSortOption('cheap', 'Сначала дешевле', this)">
+                    <span>Сначала дешевле</span>
+                    <svg class="custom-select__check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="custom-select__option" data-value="expensive" onclick="selectSortOption('expensive', 'Сначала дороже', this)">
+                    <span>Сначала дороже</span>
+                    <svg class="custom-select__check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="custom-select__option" data-value="vip" onclick="selectSortOption('vip', 'Сначала VIP', this)">
+                    <span>Сначала VIP</span>
+                    <svg class="custom-select__check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -179,30 +197,39 @@
     </div>
   </main>
 
-  <!-- ================= TRUST BANNER ================= -->
-  <section class="container" style="margin-top: 40px;">
-    <div class="footer-trust-banner">
-      <div class="trust-item">
-        <div class="trust-item__icon">🛡️</div>
-        <div>
-          <div class="trust-item__title">Проверенные специалисты</div>
-          <div class="trust-item__desc">Все рекламодатели и мастера проходят обязательную модерацию DLE перед публикацией.</div>
-        </div>
+  <!-- ================= VAULT-BOY STYLE ADVANTAGES BANNER ================= -->
+  <section class="container" style="margin-top: 50px; margin-bottom: 20px;">
+    <div class="vault-banner">
+      <div class="vault-banner__character">
+        <img src="images/branding/mascot_thumbs_up.svg" alt="Профиум рекомендует!" class="vault-banner__img">
       </div>
+      <div class="vault-banner__content">
+        <div class="vault-banner__tag">Стандарты платформы Профиум</div>
+        <h3 class="vault-banner__title">Выбирайте лучших специалистов без риска и переплат</h3>
+        <div class="vault-banner__grid">
+          <div class="vault-feature">
+            <div class="vault-feature__badge">01</div>
+            <div>
+              <div class="vault-feature__title">Проверенные специалисты</div>
+              <div class="vault-feature__desc">Каждое объявление проходит обязательную модерацию DLE. Никакого спама и фейковых номеров.</div>
+            </div>
+          </div>
 
-      <div class="trust-item">
-        <div class="trust-item__icon">⚡</div>
-        <div>
-          <div class="trust-item__title">Прямой контакт</div>
-          <div class="trust-item__desc">Связывайтесь напрямую по телефону или сообщениям без посредников и комиссий площадки.</div>
-        </div>
-      </div>
+          <div class="vault-feature">
+            <div class="vault-feature__badge">02</div>
+            <div>
+              <div class="vault-feature__title">Прямой контакт без комиссий</div>
+              <div class="vault-feature__desc">Открытые номера телефонов и прямые чаты с мастерами. Вы договариваетесь о цене лично.</div>
+            </div>
+          </div>
 
-      <div class="trust-item">
-        <div class="trust-item__icon">💳</div>
-        <div>
-          <div class="trust-item__title">Прозрачный dle-billing</div>
-          <div class="trust-item__desc">Оплата VIP-статусов и поднятия объявлений через официальные шлюзы с чеками.</div>
+          <div class="vault-feature">
+            <div class="vault-feature__badge">03</div>
+            <div>
+              <div class="vault-feature__title">Прозрачный dle-billing</div>
+              <div class="vault-feature__desc">Официальное подключение VIP-услуг и поднятия в ТОП через официальные платежные шлюзы.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

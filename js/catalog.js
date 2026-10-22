@@ -124,7 +124,26 @@ let adsDatabase = [
   }
 ];
 
-// State
+let currentSortMode = "default";
+
+function toggleSortDropdown(e) {
+  e.stopPropagation();
+  const select = document.getElementById("catalogSortSelect");
+  select.classList.toggle("open");
+}
+
+function selectSortOption(value, label, el) {
+  currentSortMode = value;
+  document.getElementById("sortCurrentLabel").textContent = label;
+  document.querySelectorAll(".custom-select__option").forEach(opt => opt.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById("catalogSortSelect").classList.remove("open");
+  applyCatalogFilters();
+}
+
+window.addEventListener("click", () => {
+  document.getElementById("catalogSortSelect")?.classList.remove("open");
+});
 let catalogCategory = "all";
 let catalogQuery = "";
 let currentCity = "Москва";
@@ -223,11 +242,11 @@ function applyCatalogFilters() {
   });
 
   // Sorting
-  if (sortMode === "cheap") {
+  if (currentSortMode === "cheap") {
     filtered.sort((a, b) => a.priceNum - b.priceNum);
-  } else if (sortMode === "expensive") {
+  } else if (currentSortMode === "expensive") {
     filtered.sort((a, b) => b.priceNum - a.priceNum);
-  } else if (sortMode === "vip") {
+  } else if (currentSortMode === "vip") {
     filtered.sort((a, b) => (b.isVip ? 1 : 0) - (a.isVip ? 1 : 0));
   }
 
@@ -272,11 +291,13 @@ function renderCatalogListings(ads) {
 
   if (ads.length === 0) {
     container.innerHTML = `
-      <div style="grid-column: 1 / -1; padding: 60px 0; text-align: center; color: var(--text-muted); background: #fff; border-radius: 20px;">
-        <div style="font-size: 42px; margin-bottom: 12px;">🔍</div>
-        <div style="font-size: 19px; font-weight: 700; color: var(--text-main);">Ничего не найдено</div>
-        <div style="font-size: 14px; margin-top: 6px;">Попробуйте изменить поисковый запрос или сбросить фильтры.</div>
-        <button class="btn btn--primary" style="margin-top: 20px;" onclick="resetCatalogFilters()">Сбросить фильтры</button>
+      <div style="grid-column: 1 / -1; padding: 56px 24px; text-align: center; background: #fff; border-radius: 20px; box-shadow: var(--shadow-sm);">
+        <img src="images/branding/mascot_search_empty.svg" alt="Ничего не найдено" style="width: 140px; height: 140px; margin-bottom: 16px;">
+        <div style="font-size: 21px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Ничего не нашлось</div>
+        <div style="font-size: 14.5px; color: var(--text-secondary); max-width: 420px; margin: 0 auto 22px; line-height: 1.5;">
+          Мы проверили весь каталог, но по запросу «${catalogQuery || 'выбранным параметрам'}» пока нет предложений. Попробуйте изменить запрос или сбросить фильтры.
+        </div>
+        <button class="btn btn--primary" onclick="resetCatalogFilters()">Сбросить фильтры и показать все</button>
       </div>
     `;
     return;
@@ -379,7 +400,13 @@ function resetCatalogFilters() {
   document.getElementById("filterVideo").checked = false;
   document.getElementById("filterCompany").checked = false;
   document.getElementById("filterPrivate").checked = false;
-  document.getElementById("sortSelect").value = "default";
+  currentSortMode = "default";
+  const labelEl = document.getElementById("sortCurrentLabel");
+  if (labelEl) labelEl.textContent = "По популярности";
+  document.querySelectorAll(".custom-select__option").forEach((opt, idx) => {
+    if (idx === 0) opt.classList.add("active");
+    else opt.classList.remove("active");
+  });
   catalogQuery = "";
   catalogCategory = "all";
   showOnlyFavorites = false;
