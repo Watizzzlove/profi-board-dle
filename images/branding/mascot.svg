@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Friendly Professional Mascot Face (Profi-style) -->
+  <circle cx="50" cy="50" r="46" fill="#e8f8f0"/>
+  <circle cx="50" cy="50" r="44" stroke="#1bb76e" stroke-width="3"/>
+  
+  <!-- Stylized Cap / Headband -->
+  <path d="M20 40C20 25 33 16 50 16C67 16 80 25 80 40H20Z" fill="#1bb76e"/>
+  <rect x="18" y="38" width="64" height="7" rx="3.5" fill="#13824c"/>
+  <!-- Cap Badge / Star -->
+  <circle cx="50" cy="28" r="5" fill="#ffffff"/>
+  <path d="M50 25L51.5 28L54.5 28.5L52 30.5L53 33.5L50 32L47 33.5L48 30.5L45.5 28.5L48.5 28L50 25Z" fill="#1bb76e"/>
+
+  <!-- Face -->
+  <ellipse cx="50" cy="58" rx="28" ry="24" fill="#ffdfba"/>
+  <!-- Cheeks blush -->
+  <circle cx="32" cy="62" r="5" fill="#fca5a5" fill-opacity="0.5"/>
+  <circle cx="68" cy="62" r="5" fill="#fca5a5" fill-opacity="0.5"/>
+  
+  <!-- Friendly Eyes -->
+  <circle cx="38" cy="54" r="3.5" fill="#1e293b"/>
+  <circle cx="62" cy="54" r="3.5" fill="#1e293b"/>
+  <!-- Eye highlights -->
+  <circle cx="39" cy="53" r="1.2" fill="#ffffff"/>
+  <circle cx="63" cy="53" r="1.2" fill="#ffffff"/>
+  
+  <!-- Smile -->
+  <path d="M40 64C42 71 58 71 60 64" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+</svg>

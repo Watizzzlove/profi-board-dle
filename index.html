@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ПрофиДоска — Каталог специалистов и объявлений (DLE 19/20)</title>
+  <title>Профиум — Сервис проверенных специалистов и объявлений (DLE 19/20)</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +15,9 @@
   <header class="header">
     <div class="container header__inner">
       <div class="header__left">
-        <a href="#" class="header__logo" onclick="resetFilters(); return false;">
-          ПрофиДоска<span class="header__logo-dot"></span>
+        <a href="index.html" class="header__logo">
+          <img src="images/branding/mascot.svg" alt="Профиум" class="header__logo-mascot">
+          <span>Профиум</span><span class="header__logo-dot"></span>
         </a>
         <div class="header__geo" id="geoBtn" onclick="openModal('modalRegion')" title="Сменить регион">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -26,6 +27,10 @@
       </div>
 
       <div class="header__right">
+        <a href="catalog.html" class="btn btn--ghost" style="color: var(--text-main); font-weight: 500;">
+          Каталог услуг
+        </a>
+
         <button class="btn btn--outline" id="openCabinetBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span id="userStatusText">Кабинет & Баланс</span>
@@ -43,14 +48,13 @@
     </div>
   </header>
 
-  <!-- ================= HERO & SEARCH (SOLID FILLED AS ON PROFI.RU) ================= -->
+  <!-- ================= HERO & SEARCH (2 CONTAINERS, REDIRECTS TO CATALOG) ================= -->
   <section class="hero">
     <div class="container">
       <h1 class="hero__headline">
         Объявления и специалисты <span id="heroCitySpan">в Москве и области</span>
       </h1>
 
-      <!-- 2 Separate Containers: Input Box + Standalone Search Button -->
       <div class="search-wrapper">
         <div class="search-input-box">
           <div class="search-input-box__icon">
@@ -63,17 +67,17 @@
 
       <div class="search-tags">
         <span class="search-tags__title">Популярные запросы:</span>
-        <span class="tag-chip" onclick="applySearchTag('Ремонт квартир')">Ремонт квартир</span>
-        <span class="tag-chip" onclick="applySearchTag('Автоэлектрик')">Автоэлектрик</span>
-        <span class="tag-chip" onclick="applySearchTag('Сантехник')">Сантехник</span>
-        <span class="tag-chip" onclick="applySearchTag('Грузоперевозки')">Грузоперевозки</span>
-        <span class="tag-chip" onclick="applySearchTag('Репетитор')">Репетитор ЕГЭ</span>
-        <span class="tag-chip" onclick="applySearchTag('Клининг')">Генеральная уборка</span>
+        <span class="tag-chip" onclick="navigateToCatalogQuery('Ремонт квартир')">Ремонт квартир</span>
+        <span class="tag-chip" onclick="navigateToCatalogQuery('Автоэлектрик')">Автоэлектрик</span>
+        <span class="tag-chip" onclick="navigateToCatalogQuery('Сантехник')">Сантехник</span>
+        <span class="tag-chip" onclick="navigateToCatalogQuery('Грузоперевозки')">Грузоперевозки</span>
+        <span class="tag-chip" onclick="navigateToCatalogQuery('Репетитор')">Репетитор ЕГЭ</span>
+        <span class="tag-chip" onclick="navigateToCatalogQuery('Потолки')">Натяжные потолки</span>
       </div>
     </div>
   </section>
 
-  <!-- ================= BENTO CATEGORIES (PASTEL COLORS + PHOTO/CUTOUT COMPOSITIONS) ================= -->
+  <!-- ================= BENTO CATEGORIES (LEADS TO CATALOG) ================= -->
   <section class="section">
     <div class="container">
       <div class="section__header">
@@ -81,12 +85,12 @@
           <h2 class="section__title">Категории услуг</h2>
           <span class="section__counter">6 основных направлений</span>
         </div>
-        <a href="#" class="section__link" onclick="filterByCategory('all'); return false;">Все категории (24) →</a>
+        <a href="catalog.html" class="section__link">Перейти в полный каталог (24) →</a>
       </div>
 
       <div class="bento-grid">
-        <!-- 1. Ремонт (Бежевый пастельный) -->
-        <div class="bento-card bento-card--beige" onclick="filterByCategory('Ремонт')">
+        <!-- 1. Ремонт -->
+        <div class="bento-card bento-card--beige" onclick="navigateToCatalogCategory('Ремонт')">
           <div class="bento-card__content">
             <div class="bento-card__title">Ремонт и отделка помещений</div>
             <div class="bento-card__sub">Квартиры, сантехника, электрика, плитка под ключ</div>
@@ -94,23 +98,21 @@
           </div>
           <div class="bento-card__img-wrap">
             <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Modern ladder & roller composition -->
               <rect x="25" y="15" width="8" height="95" rx="3" fill="#8c6d48"/>
               <rect x="55" y="15" width="8" height="95" rx="3" fill="#8c6d48"/>
               <rect x="25" y="35" width="38" height="6" rx="2" fill="#d4b896"/>
               <rect x="25" y="55" width="38" height="6" rx="2" fill="#d4b896"/>
               <rect x="25" y="75" width="38" height="6" rx="2" fill="#d4b896"/>
               <rect x="25" y="95" width="38" height="6" rx="2" fill="#d4b896"/>
-              <!-- Paint Roller -->
-              <rect x="65" y="30" width="40" height="22" rx="6" fill="#286e49"/>
+              <rect x="65" y="30" width="40" height="22" rx="6" fill="#1bb76e"/>
               <path d="M85 52V68C85 72 82 76 78 76H72V98" stroke="#5a6572" stroke-width="4" stroke-linecap="round"/>
               <circle cx="98" cy="88" r="14" fill="#d4a373" fill-opacity="0.3"/>
             </svg>
           </div>
         </div>
 
-        <!-- 2. Авто (Серо-голубой пастельный) -->
-        <div class="bento-card bento-card--blue" onclick="filterByCategory('Авто')">
+        <!-- 2. Авто -->
+        <div class="bento-card bento-card--blue" onclick="navigateToCatalogCategory('Авто')">
           <div class="bento-card__content">
             <div class="bento-card__title">Авто и спецтехника</div>
             <div class="bento-card__sub">Диагностика, ремонт ходовой, кузовной цех, шиномонтаж</div>
@@ -118,18 +120,17 @@
           </div>
           <div class="bento-card__img-wrap">
             <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Modern car & wheel silhouette -->
               <circle cx="60" cy="65" r="38" fill="#cbdde9"/>
               <circle cx="60" cy="65" r="26" stroke="#4a6984" stroke-width="6"/>
-              <circle cx="60" cy="65" r="10" fill="#286e49"/>
+              <circle cx="60" cy="65" r="10" fill="#1bb76e"/>
               <path d="M60 40V55M60 75V90M35 65H50M70 65H85" stroke="#4a6984" stroke-width="4" stroke-linecap="round"/>
               <path d="M82 32L96 18C99 15 104 15 107 18L108 19C111 22 111 27 108 30L94 44" stroke="#5a6572" stroke-width="4" stroke-linecap="round"/>
             </svg>
           </div>
         </div>
 
-        <!-- 3. Перевозки (Песочный крафт) -->
-        <div class="bento-card bento-card--sand" onclick="filterByCategory('Грузоперевозки')">
+        <!-- 3. Перевозки -->
+        <div class="bento-card bento-card--sand" onclick="navigateToCatalogCategory('Грузоперевозки')">
           <div class="bento-card__content">
             <div class="bento-card__title">Перевозки и грузчики</div>
             <div class="bento-card__sub">Газели, переезды квартир и офисов, такелаж</div>
@@ -137,7 +138,6 @@
           </div>
           <div class="bento-card__img-wrap">
             <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Boxes & cargo van elements -->
               <rect x="25" y="45" width="46" height="46" rx="4" fill="#d9b68c"/>
               <path d="M25 65H71M48 45V91" stroke="#b08b5e" stroke-width="3"/>
               <rect x="55" y="30" width="48" height="48" rx="4" fill="#c9a377"/>
@@ -147,8 +147,8 @@
           </div>
         </div>
 
-        <!-- 4. Обучение (Лавандовый пастельный) -->
-        <div class="bento-card bento-card--lavender" onclick="filterByCategory('Обучение')">
+        <!-- 4. Обучение -->
+        <div class="bento-card bento-card--lavender" onclick="navigateToCatalogCategory('Обучение')">
           <div class="bento-card__content">
             <div class="bento-card__title">Обучение и репетиторы</div>
             <div class="bento-card__sub">Подготовка к ОГЭ/ЕГЭ, иностранные языки, музыка</div>
@@ -156,10 +156,9 @@
           </div>
           <div class="bento-card__img-wrap">
             <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Book stack & cap -->
               <rect x="30" y="70" width="65" height="16" rx="3" fill="#8e73a3"/>
               <rect x="25" y="50" width="70" height="16" rx="3" fill="#aa93be"/>
-              <rect x="35" y="30" width="55" height="16" rx="3" fill="#286e49"/>
+              <rect x="35" y="30" width="55" height="16" rx="3" fill="#1bb76e"/>
               <path d="M20 25L60 10L100 25L60 40L20 25Z" fill="#583f70"/>
               <line x1="90" y1="28" x2="90" y2="52" stroke="#d4b896" stroke-width="3"/>
               <circle cx="90" cy="54" r="3" fill="#d4b896"/>
@@ -167,8 +166,8 @@
           </div>
         </div>
 
-        <!-- 5. Недвижимость (Шалфейный пастельный) -->
-        <div class="bento-card bento-card--sage" onclick="filterByCategory('Недвижимость')">
+        <!-- 5. Недвижимость -->
+        <div class="bento-card bento-card--sage" onclick="navigateToCatalogCategory('Недвижимость')">
           <div class="bento-card__content">
             <div class="bento-card__title">Аренда и недвижимость</div>
             <div class="bento-card__sub">Квартиры, апартаменты, коммерческие помещения</div>
@@ -176,9 +175,8 @@
           </div>
           <div class="bento-card__img-wrap">
             <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Modern cozy home & keys -->
               <path d="M60 20L20 52V100H100V52L60 20Z" fill="#bcd7c7"/>
-              <path d="M60 20L100 52H20L60 20Z" fill="#286e49"/>
+              <path d="M60 20L100 52H20L60 20Z" fill="#1bb76e"/>
               <rect x="48" y="65" width="24" height="35" rx="3" fill="#55886d"/>
               <circle cx="68" cy="82" r="2.5" fill="#fff"/>
               <rect x="32" y="58" width="14" height="14" rx="2" fill="#fff" fill-opacity="0.8"/>
@@ -187,8 +185,8 @@
           </div>
         </div>
 
-        <!-- 6. Красота и здоровье (Пудрово-розовый) -->
-        <div class="bento-card bento-card--rose" onclick="filterByCategory('Красота')">
+        <!-- 6. Красота и уют -->
+        <div class="bento-card bento-card--rose" onclick="navigateToCatalogCategory('Красота')">
           <div class="bento-card__content">
             <div class="bento-card__title">Красота, клининг и уют</div>
             <div class="bento-card__sub">Генеральная уборка, массаж, химчистка мебели</div>
@@ -196,12 +194,10 @@
           </div>
           <div class="bento-card__img-wrap">
             <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Spa bottle & flower composition -->
               <rect x="35" y="45" width="34" height="55" rx="8" fill="#d9998e"/>
               <rect x="46" y="32" width="12" height="15" rx="2" fill="#a4685e"/>
               <circle cx="52" cy="72" r="8" fill="#fff" fill-opacity="0.4"/>
-              <!-- Lotus / Leaf -->
-              <path d="M75 55C75 45 88 40 95 40C95 52 85 65 75 55Z" fill="#286e49"/>
+              <path d="M75 55C75 45 88 40 95 40C95 52 85 65 75 55Z" fill="#1bb76e"/>
               <path d="M85 70C75 70 70 82 70 90C82 90 92 80 85 70Z" fill="#55886d"/>
             </svg>
           </div>
@@ -210,7 +206,7 @@
     </div>
   </section>
 
-  <!-- ================= LISTINGS FEED (SPACIOUS + MODERN TABS) ================= -->
+  <!-- ================= LISTINGS FEED ================= -->
   <section class="section" style="padding-top: 20px;">
     <div class="container">
       <div class="section__header">
@@ -218,9 +214,10 @@
           <h2 class="section__title" id="feedTitle">Актуальные объявления</h2>
           <span class="section__counter" id="listingsCountBadge">6 предложений</span>
         </div>
+        <a href="catalog.html" class="section__link">Открыть все в каталоге с фильтрами →</a>
       </div>
 
-      <!-- Clean borderless pastel filter tabs -->
+      <!-- Borderless Pastel Filter Tabs -->
       <div class="feed-tabs">
         <button class="feed-tab feed-tab--all active" onclick="switchFeedTab('all', this)">Все предложения</button>
         <button class="feed-tab feed-tab--vip" onclick="switchFeedTab('vip', this)">VIP предложения</button>
@@ -230,37 +227,65 @@
       </div>
 
       <!-- Ads Grid -->
-      <div class="listings-grid" id="listingsContainer">
-        <!-- Injected via JS -->
+      <div class="listings-grid" id="listingsContainer"></div>
+    </div>
+  </section>
+
+  <!-- ================= TRUST BANNER ================= -->
+  <section class="container" style="margin-top: 20px;">
+    <div class="footer-trust-banner">
+      <div class="trust-item">
+        <div class="trust-item__icon">🛡️</div>
+        <div>
+          <div class="trust-item__title">Проверенные специалисты</div>
+          <div class="trust-item__desc">Все рекламодатели и мастера проходят обязательную модерацию DLE перед публикацией.</div>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-item__icon">⚡</div>
+        <div>
+          <div class="trust-item__title">Прямой контакт</div>
+          <div class="trust-item__desc">Связывайтесь напрямую по телефону или сообщениям без посредников и комиссий площадки.</div>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-item__icon">💳</div>
+        <div>
+          <div class="trust-item__title">Прозрачный dle-billing</div>
+          <div class="trust-item__desc">Оплата VIP-статусов и поднятия объявлений через официальные шлюзы с чеками.</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= FOOTER (ELEGANT 4-COLUMN) ================= -->
-  <footer class="footer">
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer" style="margin-top: 0;">
     <div class="container">
       <div class="footer__grid">
         <div>
           <div class="header__logo" style="margin-bottom: 14px;">
-            ПрофиДоска<span class="header__logo-dot"></span>
+            <img src="images/branding/mascot.svg" alt="Профиум" class="header__logo-mascot">
+            <span>Профиум</span><span class="header__logo-dot"></span>
           </div>
           <p style="font-size: 13.5px; line-height: 1.6; max-width: 320px; color: var(--text-secondary); margin-bottom: 20px;">
-            Современная доска объявлений и специалистов. Быстрый поиск проверенных мастеров, прозрачные цены и прямое общение без посредников.
+            Сервис проверенных специалистов и объявлений нового поколения на CMS DataLife Engine 19/20.
           </p>
           <div class="footer__dle-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            Платформа DataLife Engine 19/20
+            Платформа DLE 19/20 • xfields • dle-billing
           </div>
         </div>
 
         <div>
           <div class="footer__col-title">Каталог услуг</div>
           <ul class="footer__list">
-            <li><a href="#" onclick="filterByCategory('Ремонт'); return false;">Ремонт и отделка</a></li>
-            <li><a href="#" onclick="filterByCategory('Авто'); return false;">Автосервис и диагностика</a></li>
-            <li><a href="#" onclick="filterByCategory('Грузоперевозки'); return false;">Перевозки и грузчики</a></li>
-            <li><a href="#" onclick="filterByCategory('Обучение'); return false;">Репетиторы и курсы</a></li>
-            <li><a href="#" onclick="filterByCategory('Недвижимость'); return false;">Аренда недвижимости</a></li>
+            <li><a href="catalog.html?category=Ремонт">Ремонт и отделка</a></li>
+            <li><a href="catalog.html?category=Авто">Автосервис и диагностика</a></li>
+            <li><a href="catalog.html?category=Грузоперевозки">Перевозки и грузчики</a></li>
+            <li><a href="catalog.html?category=Обучение">Репетиторы и курсы</a></li>
+            <li><a href="catalog.html?category=Недвижимость">Аренда недвижимости</a></li>
           </ul>
         </div>
 
@@ -271,7 +296,6 @@
             <li><a href="#" onclick="openModal('modalReg'); return false;">Раздельная регистрация</a></li>
             <li><a href="#" onclick="openModal('modalCabinet'); return false;">Платные услуги dle-billing</a></li>
             <li><a href="#" onclick="showToast('Правила безопасности платформы'); return false;">Безопасные сделки</a></li>
-            <li><a href="#" onclick="showToast('Служба поддержки DLE'); return false;">Помощь и поддержка</a></li>
           </ul>
         </div>
 
@@ -288,7 +312,7 @@
       </div>
 
       <div class="footer__bottom">
-        <div>© 2026 ПрофиДоска. Все права защищены. Разработано для DLE 19/20.</div>
+        <div>© 2026 Профиум. Все права защищены. Разработано для DLE 19/20.</div>
         <div style="display: flex; gap: 20px;">
           <a href="#" onclick="showToast('Пользовательское соглашение'); return false;">Конфиденциальность</a>
           <a href="#" onclick="showToast('Оферта сервиса'); return false;">Условия использования</a>
@@ -297,11 +321,9 @@
     </div>
   </footer>
 
-  <!-- ==========================================================================
-       MODALS
-       ========================================================================== -->
+  <!-- ================= MODALS ================= -->
 
-  <!-- 1. MODAL: ВЫБОР РЕГИОНА / ГОРОДА -->
+  <!-- 1. REGION MODAL -->
   <div class="modal-overlay" id="modalRegion">
     <div class="modal">
       <div class="modal__header">
@@ -356,7 +378,7 @@
     </div>
   </div>
 
-  <!-- 2. MODAL: ПОДАТЬ ОБЪЯВЛЕНИЕ (addnews.tpl) -->
+  <!-- 2. ADD NEWS MODAL -->
   <div class="modal-overlay" id="modalAddNews">
     <div class="modal modal--large">
       <div class="modal__header">
@@ -394,7 +416,6 @@
           <textarea id="addDesc" class="form-textarea" placeholder="Опишите подробно опыт, используемые инструменты, сроки и гарантии..."></textarea>
         </div>
 
-        <!-- Xfield: Photo Gallery -->
         <div class="form-group">
           <label class="form-label">Фотографии (нативный xfield: загрузка изображений DLE)</label>
           <div class="dropzone" id="photoDropzone" onclick="simulatePhotoUpload()">
@@ -402,12 +423,9 @@
             <div class="dropzone__text">Нажмите, чтобы прикрепить фото (или перетащите файлы)</div>
             <div class="dropzone__sub">До 10 фото, авто-генерация превью WebP и водяные знаки DLE</div>
           </div>
-          <div class="upload-previews" id="photoPreviews">
-            <!-- Thumbnails injected here -->
-          </div>
+          <div class="upload-previews" id="photoPreviews"></div>
         </div>
 
-        <!-- Xfield: Video URL -->
         <div class="form-group">
           <label class="form-label">Ссылка на видеообзор (xfield: video — YouTube / RuTube / VK)</label>
           <input type="text" id="addVideo" class="form-input" placeholder="https://rutube.ru/video/... или https://youtube.com/watch?v=...">
@@ -424,7 +442,6 @@
           </div>
         </div>
 
-        <!-- DLE-BILLING OPTIONS -->
         <div class="billing-box">
           <div class="billing-box__title">
             <span>Платные услуги продвижения (Модуль dle-billing)</span>
@@ -471,34 +488,37 @@
     </div>
   </div>
 
-  <!-- 3. MODAL: РАЗДЕЛЬНАЯ РЕГИСТРАЦИЯ (registration.tpl) -->
+  <!-- 3. SPLIT REGISTRATION WITH NEW ILLUSTRATED ROLE CARDS -->
   <div class="modal-overlay" id="modalReg">
     <div class="modal">
       <div class="modal__header">
-        <div class="modal__title">Регистрация в DLE (Разделение ролей)</div>
+        <div class="modal__title">Регистрация в Профиум (Разделение ролей DLE)</div>
         <button class="modal__close" onclick="closeModal('modalReg')">✕</button>
       </div>
 
       <div class="modal__body">
-        <div class="form-label" style="margin-bottom: 12px;">Выберите ваш статус на сайте:</div>
+        <div class="form-label" style="margin-bottom: 12px;">Выберите ваш статус на платформе:</div>
         
-        <!-- Role switcher -->
         <div class="role-toggle">
-          <div class="role-card active" id="roleClientCard" onclick="selectRole('client')">
-            <div class="role-card__title">
-              <span>👤</span> Я Клиент
+          <div class="role-card role-card--client active" id="roleClientCard" onclick="selectRole('client')">
+            <div class="role-card__info">
+              <span class="role-card__badge">Заказчик</span>
+              <div class="role-card__title" style="color: #92400e;">Я Клиент</div>
+              <div class="role-card__desc" style="color: #b45309;">Ищу специалистов, сохраняю в избранное, заказываю услуги без комиссий</div>
             </div>
-            <div class="role-card__desc">
-              Ищу мастеров и товары, сохраняю в избранное, пишу отзывы и сообщения
+            <div class="role-card__illustration">
+              <img src="images/branding/role_client.svg" alt="Клиент">
             </div>
           </div>
 
-          <div class="role-card" id="roleSellerCard" onclick="selectRole('seller')">
-            <div class="role-card__title">
-              <span>🏢</span> Я Рекламодатель
+          <div class="role-card role-card--seller" id="roleSellerCard" onclick="selectRole('seller')">
+            <div class="role-card__info">
+              <span class="role-card__badge">Исполнитель</span>
+              <div class="role-card__title" style="color: #6b21a8;">Я Рекламодатель</div>
+              <div class="role-card__desc" style="color: #7e22ce;">Публикую объявления, подключаю VIP-продвижение, развиваю бизнес</div>
             </div>
-            <div class="role-card__desc">
-              Публикую объявления, подключаю VIP-услуги, продвигаю бизнес в каталоге
+            <div class="role-card__illustration">
+              <img src="images/branding/role_advertiser.svg" alt="Рекламодатель">
             </div>
           </div>
         </div>
@@ -535,7 +555,7 @@
     </div>
   </div>
 
-  <!-- 4. MODAL: ПРОСМОТР ОБЪЯВЛЕНИЯ (fullstory.tpl) -->
+  <!-- 4. DETAIL AD VIEW -->
   <div class="modal-overlay" id="modalAdDetail">
     <div class="modal modal--large">
       <div class="modal__header">
@@ -543,14 +563,10 @@
         <button class="modal__close" onclick="closeModal('modalAdDetail')">✕</button>
       </div>
 
-      <div class="modal__body" id="detailModalBody">
-        <!-- Injected via JS -->
-      </div>
+      <div class="modal__body" id="detailModalBody"></div>
 
       <div class="modal__footer" style="justify-content: space-between;">
-        <div id="detailAuthorBlock" style="font-size: 13.5px; color: var(--text-secondary);">
-          <!-- Injected author info -->
-        </div>
+        <div id="detailAuthorBlock" style="font-size: 13.5px; color: var(--text-secondary);"></div>
         <div style="display: flex; gap: 12px;">
           <button class="btn btn--outline" id="detailPromoBtn" onclick="openPromoFromDetail()">
             ⚡ Продвинуть (VIP)
@@ -563,7 +579,7 @@
     </div>
   </div>
 
-  <!-- 5. MODAL: КАБИНЕТ & БАЛАНС DLE-BILLING -->
+  <!-- 5. CABINET & DLE-BILLING -->
   <div class="modal-overlay" id="modalCabinet">
     <div class="modal">
       <div class="modal__header">
@@ -586,9 +602,7 @@
           Мои объявления на доске:
         </div>
 
-        <div id="userAdsList" style="display: flex; flex-direction: column; gap: 12px;">
-          <!-- Injected via JS -->
-        </div>
+        <div id="userAdsList" style="display: flex; flex-direction: column; gap: 12px;"></div>
 
         <div style="margin-top: 24px; padding: 14px; border-radius: var(--radius-md); background: #f0f7f2; font-size: 12.5px; color: #1f583a; line-height: 1.5;">
           💡 <strong>Как это устроено в DLE:</strong> Баланс хранится в таблице `dle_billing_users`. Списание за размещение и VIP-статус происходит через нативные транзакции биллинга.
@@ -601,10 +615,10 @@
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
+  <!-- Toast -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Script -->
+  <!-- Scripts -->
   <script src="js/app.js"></script>
 </body>
 </html>

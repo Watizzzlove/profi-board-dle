@@ -780,10 +780,28 @@ function showToast(message) {
 // ==========================================================================
 // EVENT LISTENERS
 // ==========================================================================
+// Navigation to Catalog page
+function navigateToCatalogQuery(q) {
+  window.location.href = `catalog.html?q=${encodeURIComponent(q)}`;
+}
+
+function navigateToCatalogCategory(cat) {
+  window.location.href = `catalog.html?category=${encodeURIComponent(cat)}`;
+}
+
 function initEventListeners() {
-  document.getElementById("searchSubmitBtn")?.addEventListener("click", applyAllFilters);
+  document.getElementById("searchSubmitBtn")?.addEventListener("click", () => {
+    const val = document.getElementById("searchInput").value.trim();
+    if (val) navigateToCatalogQuery(val);
+    else window.location.href = "catalog.html";
+  });
+
   document.getElementById("searchInput")?.addEventListener("keyup", (e) => {
-    if (e.key === "Enter") applyAllFilters();
+    if (e.key === "Enter") {
+      const val = document.getElementById("searchInput").value.trim();
+      if (val) navigateToCatalogQuery(val);
+      else window.location.href = "catalog.html";
+    }
   });
 
   document.getElementById("openAddNewsBtn")?.addEventListener("click", () => openModal("modalAddNews"));

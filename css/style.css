@@ -131,12 +131,23 @@ input, textarea, select {
   color: var(--text-main);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+}
+
+.header__logo-mascot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: transform var(--transition-fast);
+}
+
+.header__logo:hover .header__logo-mascot {
+  transform: scale(1.08) rotate(4deg);
 }
 
 .header__logo-dot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   background-color: var(--primary);
   border-radius: var(--radius-pill);
 }
@@ -1214,5 +1225,324 @@ input, textarea, select {
   }
   .hero__headline {
     font-size: 28px;
+  }
+}
+
+/* ==========================================================================
+   ROLE CARDS ENHANCEMENT (COLORFUL & ILLUSTRATED)
+   ========================================================================== */
+.role-card {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.role-card--client {
+  background-color: #fdf6ec; /* Warm Beige / Amber */
+  color: #92400e;
+}
+.role-card--client:hover {
+  background-color: #fbedd8;
+}
+.role-card--client.active {
+  border-color: #d97706;
+  background-color: #fdf3e2;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.15);
+}
+
+.role-card--seller {
+  background-color: #f4effa; /* Soft Lavender / Violet */
+  color: #6b21a8;
+}
+.role-card--seller:hover {
+  background-color: #ebe2f5;
+}
+.role-card--seller.active {
+  border-color: #7c3aed;
+  background-color: #f2eaf9;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15);
+}
+
+.role-card__info {
+  flex: 1;
+  padding-right: 12px;
+}
+
+.role-card__badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 6px;
+}
+
+.role-card--client .role-card__badge {
+  background: #fde68a;
+  color: #78350f;
+}
+
+.role-card--seller .role-card__badge {
+  background: #ddd6fe;
+  color: #4c1d95;
+}
+
+.role-card__illustration {
+  width: 74px;
+  height: 74px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.role-card__illustration img, .role-card__illustration svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================================================
+   FAVORITES / BOOKMARKS BUTTON
+   ========================================================================== */
+.btn-favorite {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: all var(--transition-fast);
+  z-index: 4;
+}
+
+.btn-favorite:hover {
+  transform: scale(1.1);
+  color: #ef4444;
+  background-color: #fff;
+}
+
+.btn-favorite.active {
+  color: #ef4444;
+  background-color: #fff;
+}
+
+/* ==========================================================================
+   CATALOG PAGE STYLES (SEARCH & FILTERS)
+   ========================================================================== */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.breadcrumbs a {
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+.breadcrumbs a:hover {
+  color: var(--primary);
+}
+
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.sidebar-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-main);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.filter-group-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.cat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.cat-item:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-main);
+}
+
+.cat-item.active {
+  background-color: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.cat-item__count {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.price-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.price-input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  outline: none;
+}
+.price-input:focus {
+  border-color: var(--primary);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.checkbox-label input {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.catalog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.catalog-query-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.catalog-sort {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.catalog-sort select {
+  padding: 7px 12px;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: var(--text-main);
+  outline: none;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   FOOTER TRUST BANNER
+   ========================================================================== */
+.footer-trust-banner {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.trust-item__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.trust-item__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.trust-item__desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .catalog-layout {
+    grid-template-columns: 1fr;
+  }
+  .footer-trust-banner {
+    grid-template-columns: 1fr;
   }
 }

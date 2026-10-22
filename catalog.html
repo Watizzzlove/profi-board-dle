@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог объявлений и специалистов — Профиум</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    <div class="container header__inner">
+      <div class="header__left">
+        <a href="index.html" class="header__logo">
+          <img src="images/branding/mascot.svg" alt="Профиум" class="header__logo-mascot">
+          <span>Профиум</span><span class="header__logo-dot"></span>
+        </a>
+        <div class="header__geo" id="geoBtn" onclick="openModal('modalRegion')" title="Сменить регион">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="currentCity">Москва</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <div class="header__right">
+        <button class="btn btn--outline" id="favoritesHeaderBtn" onclick="filterByFavorites()" title="Показать избранное">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span id="favCountText">Избранное (0)</span>
+        </button>
+
+        <button class="btn btn--outline" id="openCabinetBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="userStatusText">Кабинет & Баланс</span>
+        </button>
+
+        <button class="btn btn--ghost" id="openRegBtn">
+          Регистрация
+        </button>
+
+        <button class="btn btn--primary" id="openAddNewsBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Подать объявление
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= SEARCH BAR STRIP ================= -->
+  <section style="background: #fff; border-bottom: 1px solid var(--border-light); padding: 24px 0;">
+    <div class="container">
+      <div class="search-wrapper">
+        <div class="search-input-box">
+          <div class="search-input-box__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <input type="text" class="search-input-box__input" id="catalogSearchInput" placeholder="Поиск по названию, услуге или описанию...">
+        </div>
+        <button class="btn btn--search-standalone" id="catalogSearchBtn" onclick="executeCatalogSearch()">Найти</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAIN CATALOG CONTENT ================= -->
+  <main class="section" style="padding-top: 36px;">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs">
+        <a href="index.html">Главная</a>
+        <span>/</span>
+        <a href="catalog.html">Каталог объявлений</a>
+        <span>/</span>
+        <span id="breadcrumbCurrent">Все категории</span>
+      </nav>
+
+      <div class="catalog-layout">
+        <!-- LEFT SIDEBAR: FILTERS -->
+        <aside class="sidebar-card">
+          <div class="sidebar-title">Фильтры поиска</div>
+
+          <!-- Categories -->
+          <div>
+            <div class="filter-group-title">Категория</div>
+            <div class="cat-list">
+              <div class="cat-item active" onclick="setCatalogCategory('all', this)">
+                <span>Все категории</span>
+                <span class="cat-item__count">6</span>
+              </div>
+              <div class="cat-item" onclick="setCatalogCategory('Ремонт', this)">
+                <span>Ремонт и отделка</span>
+                <span class="cat-item__count">3</span>
+              </div>
+              <div class="cat-item" onclick="setCatalogCategory('Авто', this)">
+                <span>Автосервис и диагностика</span>
+                <span class="cat-item__count">1</span>
+              </div>
+              <div class="cat-item" onclick="setCatalogCategory('Грузоперевозки', this)">
+                <span>Перевозки и грузчики</span>
+                <span class="cat-item__count">1</span>
+              </div>
+              <div class="cat-item" onclick="setCatalogCategory('Обучение', this)">
+                <span>Обучение и репетиторы</span>
+                <span class="cat-item__count">1</span>
+              </div>
+              <div class="cat-item" onclick="setCatalogCategory('Недвижимость', this)">
+                <span>Недвижимость</span>
+                <span class="cat-item__count">0</span>
+              </div>
+              <div class="cat-item" onclick="setCatalogCategory('Красота', this)">
+                <span>Красота и клининг</span>
+                <span class="cat-item__count">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price filter -->
+          <div>
+            <div class="filter-group-title">Цена, ₽</div>
+            <div class="price-inputs">
+              <input type="number" class="price-input" id="priceMin" placeholder="От 0" oninput="applyCatalogFilters()">
+              <input type="number" class="price-input" id="priceMax" placeholder="До 10 000" oninput="applyCatalogFilters()">
+            </div>
+          </div>
+
+          <!-- Checkbox Options -->
+          <div>
+            <div class="filter-group-title">Параметры объявления</div>
+            <label class="checkbox-label">
+              <input type="checkbox" id="filterVip" onchange="applyCatalogFilters()">
+              <span>Только VIP предложения</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="filterVideo" onchange="applyCatalogFilters()">
+              <span>С видеообзором</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="filterCompany" onchange="applyCatalogFilters()">
+              <span>Только компании</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="filterPrivate" onchange="applyCatalogFilters()">
+              <span>Частные специалисты</span>
+            </label>
+          </div>
+
+          <button class="btn btn--outline" style="width: 100%;" onclick="resetCatalogFilters()">
+            Сбросить фильтры
+          </button>
+        </aside>
+
+        <!-- RIGHT AREA: RESULTS -->
+        <section>
+          <div class="catalog-header">
+            <div>
+              <h1 class="catalog-query-title" id="catalogResultHeading">Все предложения</h1>
+              <div style="font-size: 14px; color: var(--text-muted); margin-top: 4px;" id="catalogMetaSubtitle">Показано 6 объявлений в регионе Москва и область</div>
+            </div>
+
+            <div class="catalog-sort">
+              <span style="color: var(--text-muted);">Сортировка:</span>
+              <select id="sortSelect" onchange="applyCatalogFilters()">
+                <option value="default">По популярности</option>
+                <option value="cheap">Сначала дешевле</option>
+                <option value="expensive">Сначала дороже</option>
+                <option value="vip">Сначала VIP</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Listings container -->
+          <div class="listings-grid" id="catalogListingsContainer" style="grid-template-columns: repeat(2, 1fr);">
+            <!-- Rendered via JS -->
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= TRUST BANNER ================= -->
+  <section class="container" style="margin-top: 40px;">
+    <div class="footer-trust-banner">
+      <div class="trust-item">
+        <div class="trust-item__icon">🛡️</div>
+        <div>
+          <div class="trust-item__title">Проверенные специалисты</div>
+          <div class="trust-item__desc">Все рекламодатели и мастера проходят обязательную модерацию DLE перед публикацией.</div>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-item__icon">⚡</div>
+        <div>
+          <div class="trust-item__title">Прямой контакт</div>
+          <div class="trust-item__desc">Связывайтесь напрямую по телефону или сообщениям без посредников и комиссий площадки.</div>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-item__icon">💳</div>
+        <div>
+          <div class="trust-item__title">Прозрачный dle-billing</div>
+          <div class="trust-item__desc">Оплата VIP-статусов и поднятия объявлений через официальные шлюзы с чеками.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer" style="margin-top: 0;">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="header__logo" style="margin-bottom: 14px;">
+            <img src="images/branding/mascot.svg" alt="Профиум" class="header__logo-mascot">
+            <span>Профиум</span><span class="header__logo-dot"></span>
+          </div>
+          <p style="font-size: 13.5px; line-height: 1.6; max-width: 320px; color: var(--text-secondary); margin-bottom: 20px;">
+            Сервис проверенных специалистов и объявлений нового поколения на CMS DataLife Engine 19/20.
+          </p>
+          <div class="footer__dle-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            Платформа DLE 19/20 • xfields • dle-billing
+          </div>
+        </div>
+
+        <div>
+          <div class="footer__col-title">Каталог услуг</div>
+          <ul class="footer__list">
+            <li><a href="catalog.html?category=Ремонт">Ремонт и отделка</a></li>
+            <li><a href="catalog.html?category=Авто">Автосервис и диагностика</a></li>
+            <li><a href="catalog.html?category=Грузоперевозки">Перевозки и грузчики</a></li>
+            <li><a href="catalog.html?category=Обучение">Репетиторы и курсы</a></li>
+            <li><a href="catalog.html?category=Недвижимость">Аренда недвижимости</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer__col-title">Пользователям</div>
+          <ul class="footer__list">
+            <li><a href="#" onclick="openModal('modalAddNews'); return false;">Подать объявление</a></li>
+            <li><a href="#" onclick="openModal('modalReg'); return false;">Раздельная регистрация</a></li>
+            <li><a href="#" onclick="openModal('modalCabinet'); return false;">Платные услуги dle-billing</a></li>
+            <li><a href="#" onclick="showToast('Правила безопасности платформы'); return false;">Безопасные сделки</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer__col-title">Регионы платформы</div>
+          <ul class="footer__list">
+            <li><a href="#" onclick="selectRegion('Москва'); return false;">г. Москва (ЦАО, ЗАО, САО)</a></li>
+            <li><a href="#" onclick="selectRegion('Химки'); return false;">Химки и Куркино</a></li>
+            <li><a href="#" onclick="selectRegion('Мытищи'); return false;">Мытищи и Королёв</a></li>
+            <li><a href="#" onclick="selectRegion('Балашиха'); return false;">Балашиха и Реутов</a></li>
+            <li><a href="#" onclick="selectRegion('Подольск'); return false;">Подольск и Щербинка</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div>© 2026 Профиум. Все права защищены. Разработано для DLE 19/20.</div>
+        <div style="display: flex; gap: 20px;">
+          <a href="#" onclick="showToast('Пользовательское соглашение'); return false;">Конфиденциальность</a>
+          <a href="#" onclick="showToast('Оферта сервиса'); return false;">Условия использования</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 1. REGION MODAL -->
+  <div class="modal-overlay" id="modalRegion">
+    <div class="modal">
+      <div class="modal__header">
+        <div class="modal__title">Выберите город или регион</div>
+        <button class="modal__close" onclick="closeModal('modalRegion')">✕</button>
+      </div>
+      <div class="modal__body">
+        <div class="form-group">
+          <input type="text" class="form-input" id="regionSearchInput" placeholder="Введите название города (например: Химки)..." oninput="filterRegionsList(this.value)">
+        </div>
+
+        <div style="font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text-main);">Популярные регионы:</div>
+        <div class="region-chips">
+          <span class="region-chip active" onclick="selectRegion('Москва')">Москва</span>
+          <span class="region-chip" onclick="selectRegion('Химки')">Химки</span>
+          <span class="region-chip" onclick="selectRegion('Балашиха')">Балашиха</span>
+          <span class="region-chip" onclick="selectRegion('Мытищи')">Мытищи</span>
+          <span class="region-chip" onclick="selectRegion('Подольск')">Подольск</span>
+          <span class="region-chip" onclick="selectRegion('Красногорск')">Красногорск</span>
+        </div>
+
+        <div class="region-list" id="regionItemsList">
+          <div class="region-item active" onclick="selectRegion('Москва')">
+            <span>Москва и центр</span>
+            <span style="font-size: 12px; color: var(--text-muted);">4 820 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Химки')">
+            <span>Химки (Север МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">840 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Балашиха')">
+            <span>Балашиха (Восток МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">1 120 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Мытищи')">
+            <span>Мытищи (Северо-Восток МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">790 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Подольск')">
+            <span>Подольск (Юг МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">950 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Красногорск')">
+            <span>Красногорск (Запад МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">680 объявлений</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--outline" onclick="closeModal('modalRegion')">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ADD NEWS MODAL -->
+  <div class="modal-overlay" id="modalAddNews">
+    <div class="modal modal--large">
+      <div class="modal__header">
+        <div class="modal__title">Подача объявления в DLE (addnews.tpl)</div>
+        <button class="modal__close" onclick="closeModal('modalAddNews')">✕</button>
+      </div>
+      <div class="modal__body">
+        <div class="form-group">
+          <label class="form-label">Заголовок объявления *</label>
+          <input type="text" id="addTitle" class="form-input" placeholder="Например: Качественный ремонт ванных комнат">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="form-label">Категория DLE *</label>
+            <select id="addCategory" class="form-select">
+              <option value="Ремонт">Ремонт и отделка (Платное: 150 ₽)</option>
+              <option value="Авто">Авто и спецтехника (Бесплатно)</option>
+              <option value="Грузоперевозки">Перевозки и грузчики (Бесплатно)</option>
+              <option value="Обучение">Обучение и репетиторы (Бесплатно)</option>
+              <option value="Недвижимость">Недвижимость (Платное: 200 ₽)</option>
+              <option value="Красота">Красота и клининг (Бесплатно)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Стоимость (xfield: price) *</label>
+            <input type="text" id="addPrice" class="form-input" placeholder="Например: 3 500 ₽ / м²">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Описание объявления *</label>
+          <textarea id="addDesc" class="form-textarea" placeholder="Опишите подробно условия, опыт работы..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Фотографии (нативный xfield: загрузка изображений DLE)</label>
+          <div class="dropzone" id="photoDropzone" onclick="simulatePhotoUpload()">
+            <div class="dropzone__icon">📷</div>
+            <div class="dropzone__text">Нажмите, чтобы прикрепить фото (или перетащите файлы)</div>
+            <div class="dropzone__sub">До 10 фото, авто-генерация превью WebP и водяные знаки DLE</div>
+          </div>
+          <div class="upload-previews" id="photoPreviews"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ссылка на видеообзор (xfield: video)</label>
+          <input type="text" id="addVideo" class="form-input" placeholder="https://rutube.ru/video/... или https://youtube.com/watch?v=...">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="form-label">Город / Район *</label>
+            <input type="text" id="addCity" class="form-input" value="Москва, ЦАО">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Контактный телефон *</label>
+            <input type="text" id="addPhone" class="form-input" value="+7 (926) 450-22-18">
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--outline" onclick="closeModal('modalAddNews')">Отмена</button>
+        <button class="btn btn--primary" onclick="submitNewAd()">Опубликовать объявление</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SPLIT REGISTRATION WITH NEW COLORFUL & ILLUSTRATED CARDS -->
+  <div class="modal-overlay" id="modalReg">
+    <div class="modal">
+      <div class="modal__header">
+        <div class="modal__title">Регистрация в Профиум (Разделение ролей DLE)</div>
+        <button class="modal__close" onclick="closeModal('modalReg')">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <div class="form-label" style="margin-bottom: 12px;">Выберите ваш статус на платформе:</div>
+        
+        <!-- Enhanced Illustrated Role Cards -->
+        <div class="role-toggle">
+          <div class="role-card role-card--client active" id="roleClientCard" onclick="selectRole('client')">
+            <div class="role-card__info">
+              <span class="role-card__badge">Заказчик</span>
+              <div class="role-card__title" style="color: #92400e;">Я Клиент</div>
+              <div class="role-card__desc" style="color: #b45309;">Ищу специалистов, сохраняю в избранное, заказываю услуги без комиссий</div>
+            </div>
+            <div class="role-card__illustration">
+              <img src="images/branding/role_client.svg" alt="Клиент">
+            </div>
+          </div>
+
+          <div class="role-card role-card--seller" id="roleSellerCard" onclick="selectRole('seller')">
+            <div class="role-card__info">
+              <span class="role-card__badge">Исполнитель</span>
+              <div class="role-card__title" style="color: #6b21a8;">Я Рекламодатель</div>
+              <div class="role-card__desc" style="color: #7e22ce;">Публикую объявления, подключаю VIP-продвижение, развиваю бизнес</div>
+            </div>
+            <div class="role-card__illustration">
+              <img src="images/branding/role_advertiser.svg" alt="Рекламодатель">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="companyFieldGroup" style="display: none;">
+          <label class="form-label">Название организации / Имя мастера *</label>
+          <input type="text" class="form-input" id="regCompany" placeholder="Например: ООО «СтройГрупп» или Мастер Алексей">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ваше имя / Логин *</label>
+          <input type="text" class="form-input" id="regLogin" placeholder="alex_moscow">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Электронная почта *</label>
+          <input type="email" class="form-input" id="regEmail" placeholder="name@example.ru">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Пароль *</label>
+          <input type="password" class="form-input" id="regPassword" placeholder="••••••••">
+        </div>
+
+        <div style="font-size: 12.5px; color: var(--text-muted); line-height: 1.45;">
+          При сохранении DLE плагин автоматически определит пользователя в системную группу <strong><span id="targetGroupName">«Клиенты» (ID 4)</span></strong>.
+        </div>
+      </div>
+
+      <div class="modal__footer">
+        <button class="btn btn--outline" onclick="closeModal('modalReg')">Закрыть</button>
+        <button class="btn btn--primary" onclick="submitRegistration()">Зарегистрироваться</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. DETAIL AD VIEW -->
+  <div class="modal-overlay" id="modalAdDetail">
+    <div class="modal modal--large">
+      <div class="modal__header">
+        <div class="modal__title" id="detailModalTitle">Просмотр объявления</div>
+        <button class="modal__close" onclick="closeModal('modalAdDetail')">✕</button>
+      </div>
+      <div class="modal__body" id="detailModalBody"></div>
+      <div class="modal__footer" style="justify-content: space-between;">
+        <div id="detailAuthorBlock" style="font-size: 13.5px; color: var(--text-secondary);"></div>
+        <div style="display: flex; gap: 12px;">
+          <button class="btn btn--outline" id="detailPromoBtn" onclick="openPromoFromDetail()">⚡ Продвинуть (VIP)</button>
+          <button class="btn btn--primary" id="detailCallBtn" onclick="revealDetailPhone()">Показать телефон</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. CABINET & DLE-BILLING -->
+  <div class="modal-overlay" id="modalCabinet">
+    <div class="modal">
+      <div class="modal__header">
+        <div class="modal__title">Личный кабинет и dle-billing</div>
+        <button class="modal__close" onclick="closeModal('modalCabinet')">✕</button>
+      </div>
+      <div class="modal__body">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px; background-color: var(--primary-soft); border-radius: var(--radius-md); margin-bottom: 24px;">
+          <div>
+            <div style="font-size: 12.5px; color: var(--primary); font-weight: 500;">Текущий баланс (dle-billing)</div>
+            <div style="font-size: 26px; font-weight: 700; color: var(--primary);" id="cabBalanceValue">1 450 ₽</div>
+          </div>
+          <button class="btn btn--primary" onclick="simulateTopUp()">+ Пополнить счет</button>
+        </div>
+        <div style="font-size: 14.5px; font-weight: 600; margin-bottom: 14px; color: var(--text-main);">Мои объявления на доске:</div>
+        <div id="userAdsList" style="display: flex; flex-direction: column; gap: 12px;"></div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--outline" onclick="closeModal('modalCabinet')">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/catalog.js"></script>
+</body>
+</html>
