@@ -94,11 +94,11 @@
     </div>
   </div>
 
-  <!-- ================= HERO & SEARCH (CENTERED SEARCH WITH MASCOT BEHIND PINNED TO RIGHT EDGE) ================= -->
+  <!-- ================= HERO & SEARCH (CENTERED SEARCH WITH 3D MASCOT BEHIND) ================= -->
   <section class="hero">
-    <!-- Mascot background graphic pinned right against screen edge behind content -->
+    <!-- 3D Mascot background graphic pinned right against screen edge behind content -->
     <div class="hero__mascot-edge" aria-hidden="true">
-      <img src="images/branding/mascot_hero_lens.svg" alt="Профиум Маскот с лупой" class="hero__mascot-img">
+      <img src="images/branding/mascot_hero_peeking.png" alt="Профиум Маскот" class="hero__mascot-img">
     </div>
 
     <div class="container hero__container">
@@ -107,23 +107,25 @@
           Объявления и специалисты<br><span id="heroCitySpan">в Москве и области</span>
         </h1>
 
-        <div class="search-wrapper">
-          <div class="search-input-box">
-            <input type="text" class="search-input-box__input" id="searchInput" placeholder="Введите услугу или специалиста..." autocomplete="off">
+        <div class="hero__search-group">
+          <div class="search-wrapper">
+            <div class="search-input-box">
+              <input type="text" class="search-input-box__input" id="searchInput" placeholder="Введите услугу или специалиста..." autocomplete="off">
+            </div>
+            <button class="btn btn--search-standalone" id="searchSubmitBtn" title="Найти" aria-label="Найти">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+            </button>
           </div>
-          <button class="btn btn--search-standalone" id="searchSubmitBtn" title="Найти" aria-label="Найти">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
-          </button>
-        </div>
 
-        <div class="search-tags" id="searchTagsContainer">
-          <span class="search-tags__title">Популярные запросы:</span>
-          <span class="tag-chip" onclick="navigateToCatalogQuery('Ремонт квартир')">Ремонт квартир</span>
-          <span class="tag-chip" onclick="navigateToCatalogQuery('Автоэлектрик')">Автоэлектрик</span>
-          <span class="tag-chip" onclick="navigateToCatalogQuery('Сантехник')">Сантехник</span>
-          <span class="tag-chip" onclick="navigateToCatalogQuery('Грузоперевозки')">Грузоперевозки</span>
-          <span class="tag-chip" onclick="navigateToCatalogQuery('Репетитор')">Репетитор ЕГЭ</span>
-          <span class="tag-chip" onclick="navigateToCatalogQuery('Потолки')">Натяжные потолки</span>
+          <div class="search-tags" id="searchTagsContainer">
+            <span class="search-tags__title">Популярные запросы</span>
+            <span class="tag-chip" onclick="navigateToCatalogQuery('Ремонт квартир')">Ремонт квартир</span>
+            <span class="tag-chip" onclick="navigateToCatalogQuery('Автоэлектрик')">Автоэлектрик</span>
+            <span class="tag-chip" onclick="navigateToCatalogQuery('Сантехник')">Сантехник</span>
+            <span class="tag-chip" onclick="navigateToCatalogQuery('Грузоперевозки')">Грузоперевозки</span>
+            <span class="tag-chip" onclick="navigateToCatalogQuery('Репетитор')">Репетитор ЕГЭ</span>
+            <span class="tag-chip" onclick="navigateToCatalogQuery('Потолки')">Натяжные потолки</span>
+          </div>
         </div>
       </div>
     </div>
@@ -331,7 +333,7 @@
   <section class="container" style="margin-top: 50px; margin-bottom: 20px;">
     <div class="vault-banner">
       <div class="vault-banner__character">
-        <img src="images/branding/mascot_thumbs_up.svg" alt="Профиум рекомендует!" class="vault-banner__img">
+        <img src="images/branding/mascot_platform_standards.png" alt="Профиум рекомендует!" class="vault-banner__img">
       </div>
       <div class="vault-banner__content">
         <div class="vault-banner__tag">Стандарты платформы Профиум</div>

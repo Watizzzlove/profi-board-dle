@@ -297,7 +297,7 @@ function renderListings(ads) {
   if (ads.length === 0) {
     container.innerHTML = `
       <div style="grid-column: 1 / -1; padding: 70px 0; text-align: center; color: var(--text-muted);">
-        <div style="font-size: 40px; margin-bottom: 14px;">🔍</div>
+        <img src="images/branding/mascot_empty_state.png" alt="Объявлений не найдено" style="width: 170px; height: 170px; object-fit: contain; margin-bottom: 16px;">
         <div style="font-size: 19px; font-weight: 700; color: var(--text-main);">Объявлений не найдено</div>
         <div style="font-size: 14.5px; margin-top: 8px;">Попробуйте выбрать другой город или сбросить поисковый фильтр.</div>
         <button class="btn btn--outline" style="margin-top: 24px;" onclick="resetFilters()">Сбросить фильтры</button>
@@ -827,12 +827,14 @@ function initEventListeners() {
       }
     });
 
-    // Mobile: Show popular queries on input focus
-    searchInput.addEventListener("focus", () => {
+    // Mobile: Show popular queries on input focus or click
+    const showMobileTags = () => {
       if (searchTags) {
         searchTags.classList.add("search-tags--visible-mobile");
       }
-    });
+    };
+    searchInput.addEventListener("focus", showMobileTags);
+    searchInput.addEventListener("click", showMobileTags);
   }
 
   // Close mobile search tags when tapping outside

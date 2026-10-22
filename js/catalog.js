@@ -293,7 +293,7 @@ function renderCatalogListings(ads) {
   if (ads.length === 0) {
     container.innerHTML = `
       <div style="grid-column: 1 / -1; padding: 56px 24px; text-align: center; background: #fff; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
-        <img src="images/branding/mascot_search_empty.svg" alt="Ничего не найдено" style="width: 140px; height: 140px; margin-bottom: 16px;">
+        <img src="images/branding/mascot_empty_state.png" alt="Ничего не найдено" style="width: 170px; height: 170px; object-fit: contain; margin-bottom: 16px;">
         <div style="font-size: 21px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Ничего не нашлось</div>
         <div style="font-size: 14.5px; color: var(--text-secondary); max-width: 420px; margin: 0 auto 22px; line-height: 1.5;">
           Мы проверили весь каталог, но по запросу «${catalogQuery || 'выбранным параметрам'}» пока нет предложений. Попробуйте изменить запрос или сбросить фильтры.

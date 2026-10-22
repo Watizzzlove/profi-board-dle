@@ -347,19 +347,26 @@ input, textarea, select {
    ========================================================================== */
 .hero {
   background-color: var(--bg-surface);
-  padding: 80px 0 54px; /* Generous top breathing room from header */
+  min-height: calc(100vh - 76px);
+  min-height: calc(100svh - 76px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0; /* Ample top and bottom breathing room */
   border-bottom: 1px solid var(--border-light);
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
-/* Mascot as background graphic pinned directly against the right screen edge */
+/* 3D Mascot as background graphic pinned directly against the right screen edge */
 .hero__mascot-edge {
   position: absolute;
-  right: -25px;
+  right: 0;
   bottom: 0;
-  width: 550px;
-  height: 420px;
+  width: 520px;
+  height: 640px;
+  max-height: 90%;
   z-index: 1; /* Graphic behind content */
   pointer-events: none;
   display: flex;
@@ -383,20 +390,22 @@ input, textarea, select {
 .hero__container {
   position: relative;
   z-index: 5; /* Content in front of mascot */
+  width: 100%;
 }
 
 .hero__content {
   position: relative;
   max-width: 960px;
   margin: 0 auto; /* Centered block as requested */
+  width: 100%;
 }
 
 .hero__headline {
-  font-size: 52px;
+  font-size: 54px;
   font-weight: 700;
   letter-spacing: -1.2px;
   line-height: 1.15;
-  margin-bottom: 32px;
+  margin-bottom: 34px;
   color: var(--text-main);
   max-width: 100%; /* Spans full width of container */
 }
@@ -405,13 +414,18 @@ input, textarea, select {
   color: var(--primary);
 }
 
+.hero__search-group {
+  position: relative;
+  width: 100%;
+  z-index: 6;
+}
+
 /* 2 Separate containers: Input box + Standalone Search button in 1 ROW */
 .search-wrapper {
   display: flex;
   align-items: center;
   gap: 12px;
   position: relative;
-  z-index: 6;
   width: 100%;
 }
 
@@ -474,38 +488,47 @@ input, textarea, select {
   transform: translateY(-1px);
   box-shadow: 0 0 0 2px #ffffff, 0 6px 18px rgba(0, 0, 0, 0.16);
 }
-  transform: translateY(-1px);
-}
 
+/* Popular queries: pushed noticeably lower down, NO grey borders or pills! */
 .search-tags {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 22px;
+  gap: 10px;
+  margin-top: 36px; /* Clearly separated from search bar */
   position: relative;
   z-index: 6;
+  max-width: 680px;
+}
 }
 
 .search-tags__title {
-  font-size: 13.5px;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--text-muted);
   margin-right: 4px;
+  white-space: nowrap;
 }
 
+/* Clean text links without grey borders/pills as requested */
 .tag-chip {
-  padding: 6px 14px;
-  background-color: var(--bg-subtle);
-  border-radius: var(--radius-pill);
-  font-size: 13.5px;
-  color: var(--text-secondary);
+  padding: 4px 8px;
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #64748b;
+  text-decoration: underline;
+  text-decoration-color: rgba(148, 163, 184, 0.45);
+  text-underline-offset: 4px;
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
 }
 
 .tag-chip:hover, .tag-chip.active {
-  background-color: var(--primary-soft);
   color: var(--primary);
+  text-decoration-color: var(--primary);
+  background-color: transparent;
   font-weight: 500;
 }
 
@@ -1458,7 +1481,13 @@ input, textarea, select {
 
 @media (max-width: 768px) {
   .hero {
-    padding: 38px 0 32px;
+    min-height: calc(100vh - 64px);
+    min-height: calc(100svh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 0;
+    box-sizing: border-box;
   }
   .hero__content {
     max-width: 100%;
@@ -1467,12 +1496,13 @@ input, textarea, select {
     font-size: 28px;
     letter-spacing: -0.6px;
     line-height: 1.2;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
     max-width: 100%; /* Spans across full width of screen as requested */
   }
   .hero__mascot-edge {
-    width: 220px;
-    height: 180px;
+    width: 210px;
+    height: 285px;
+    max-height: 55%;
     bottom: 0;
     right: 0;
     opacity: 0.95;
@@ -1506,21 +1536,59 @@ input, textarea, select {
     box-shadow: 0 0 0 2px #ffffff, 0 3px 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Mobile Popular Queries: collapsed by default, cleanly expands when search input is focused */
+  /* Mobile Popular Queries: vertical dropdown list, 1 line title, no gray pills */
   .search-tags {
     display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    width: 100%;
     background: #ffffff;
     border: 1px solid var(--border-light);
-    border-radius: 14px;
-    padding: 12px;
-    margin-top: 10px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-    z-index: 20;
-    position: relative;
+    border-radius: 16px;
+    padding: 14px 12px;
+    margin-top: 0;
+    box-shadow: 0 12px 32px rgba(18, 22, 28, 0.14);
+    z-index: 60;
   }
   .search-tags.search-tags--visible-mobile {
-    display: flex;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 4px !important;
     animation: fadeInDown 0.2s ease;
+  }
+  .search-tags__title {
+    white-space: nowrap !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    color: var(--text-muted) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 2px 8px 8px !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    margin-bottom: 4px !important;
+    display: block !important;
+  }
+  .tag-chip {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 11px 12px !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    border: none !important;
+    font-size: 14.5px !important;
+    font-weight: 500 !important;
+    color: var(--text-main) !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    text-align: left !important;
+  }
+  .tag-chip:active, .tag-chip:hover {
+    background-color: var(--bg-subtle) !important;
+    color: var(--primary) !important;
   }
 
   /* Section headers collapse on mobile */
