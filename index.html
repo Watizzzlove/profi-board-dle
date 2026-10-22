@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Профиум — Сервис проверенных специалистов и объявлений (DLE 19/20)</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=3.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -118,13 +118,33 @@
           </div>
 
           <div class="search-tags" id="searchTagsContainer">
-            <span class="search-tags__title">Популярные запросы</span>
-            <span class="tag-chip" onclick="navigateToCatalogQuery('Ремонт квартир')">Ремонт квартир</span>
-            <span class="tag-chip" onclick="navigateToCatalogQuery('Автоэлектрик')">Автоэлектрик</span>
-            <span class="tag-chip" onclick="navigateToCatalogQuery('Сантехник')">Сантехник</span>
-            <span class="tag-chip" onclick="navigateToCatalogQuery('Грузоперевозки')">Грузоперевозки</span>
-            <span class="tag-chip" onclick="navigateToCatalogQuery('Репетитор')">Репетитор ЕГЭ</span>
-            <span class="tag-chip" onclick="navigateToCatalogQuery('Потолки')">Натяжные потолки</span>
+            <div class="search-tags__title">Популярные запросы:</div>
+            <div class="search-tags__list">
+              <button type="button" class="tag-chip" onclick="navigateToCatalogQuery('Ремонт квартир')">
+                <span>Ремонт квартир</span>
+                <svg class="tag-chip__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+              <button type="button" class="tag-chip" onclick="navigateToCatalogQuery('Автоэлектрик')">
+                <span>Автоэлектрик</span>
+                <svg class="tag-chip__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+              <button type="button" class="tag-chip" onclick="navigateToCatalogQuery('Сантехник')">
+                <span>Сантехник</span>
+                <svg class="tag-chip__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+              <button type="button" class="tag-chip" onclick="navigateToCatalogQuery('Грузоперевозки')">
+                <span>Грузоперевозки</span>
+                <svg class="tag-chip__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+              <button type="button" class="tag-chip" onclick="navigateToCatalogQuery('Репетитор ЕГЭ')">
+                <span>Репетитор ЕГЭ</span>
+                <svg class="tag-chip__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+              <button type="button" class="tag-chip" onclick="navigateToCatalogQuery('Натяжные потолки')">
+                <span>Натяжные потолки</span>
+                <svg class="tag-chip__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -726,6 +746,6 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Scripts -->
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=3.0"></script>
 </body>
 </html>
