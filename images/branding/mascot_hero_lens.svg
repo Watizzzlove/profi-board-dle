@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 340" fill="none">
+  <!-- Profium Vault-Boy Mascot with Magnifying Glass (Based directly on Platform Standards Mascot) -->
+  <defs>
+    <radialGradient id="lensReflect" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.4"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Soft mint background halo ring behind him -->
+  <circle cx="210" cy="180" r="115" fill="#e8f8f0"/>
+
+  <!-- Torso & Overalls leaning slightly to the left -->
+  <g transform="rotate(-6 200 240)">
+    <!-- Body in green overalls -->
+    <path d="M165 200 C165 175 190 170 215 170 C240 170 265 175 265 200 L275 340 H155 L165 200 Z" fill="#1bb76e"/>
+    <!-- Overalls Straps -->
+    <path d="M178 175 L182 255" stroke="#13824c" stroke-width="8" stroke-linecap="round"/>
+    <path d="M250 175 L246 255" stroke="#13824c" stroke-width="8" stroke-linecap="round"/>
+    <!-- Brass Buttons -->
+    <circle cx="182" cy="245" r="5.5" fill="#fbbf24"/>
+    <circle cx="246" cy="245" r="5.5" fill="#fbbf24"/>
+
+    <!-- Right Arm leaning on hip / side -->
+    <path d="M260 190 C280 200 295 235 275 265" stroke="#ffdfba" stroke-width="15" stroke-linecap="round"/>
+    <circle cx="275" cy="265" r="10" fill="#ffdfba"/>
+  </g>
+
+  <!-- Left Arm reaching forward holding MAGNIFYING GLASS towards search -->
+  <g id="lens-arm">
+    <!-- Arm reaching to the left -->
+    <path d="M180 190 C135 195 95 180 65 145" stroke="#ffdfba" stroke-width="16" stroke-linecap="round"/>
+    <!-- Sleeve cuff -->
+    <circle cx="182" cy="190" r="12" fill="#13824c"/>
+    
+    <!-- Hand gripping the magnifying glass handle -->
+    <circle cx="62" cy="142" r="13" fill="#ffdfba"/>
+    <path d="M68 132 C68 126 60 126 56 132" stroke="#e29578" stroke-width="3" stroke-linecap="round"/>
+    <path d="M66 142 C66 136 58 136 54 142" stroke="#e29578" stroke-width="3" stroke-linecap="round"/>
+    <path d="M64 152 C64 146 56 146 52 152" stroke="#e29578" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Magnifying Glass (Looking into the search) -->
+    <!-- Handle -->
+    <line x1="62" y1="145" x2="92" y2="175" stroke="#334155" stroke-width="13" stroke-linecap="round"/>
+    <line x1="64" y1="147" x2="90" y2="173" stroke="#1bb76e" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- Glass Rim & Translucent Lens -->
+    <g transform="translate(-15, 20)">
+      <circle cx="56" cy="56" r="48" fill="none" stroke="#1e293b" stroke-width="9"/>
+      <circle cx="56" cy="56" r="48" fill="none" stroke="#64748b" stroke-width="3"/>
+      <!-- Glass Lens -->
+      <circle cx="56" cy="56" r="43.5" fill="url(#lensReflect)"/>
+      <circle cx="56" cy="56" r="43.5" stroke="#38bdf8" stroke-width="2.5" stroke-opacity="0.8"/>
+      <!-- Glare highlight -->
+      <path d="M30 42 C30 28 42 22 58 22" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="72" cy="28" r="3" fill="#ffffff"/>
+    </g>
+  </g>
+
+  <!-- Neck & Head (Exactly like mascot_thumbs_up) -->
+  <g transform="rotate(-4 200 110)">
+    <!-- Neck -->
+    <rect x="190" y="130" width="22" height="24" fill="#ffdfba" rx="5"/>
+    
+    <!-- Face / Head Base -->
+    <ellipse cx="202" cy="98" rx="46" ry="42" fill="#ffdfba"/>
+    <!-- Cheeks Blush -->
+    <circle cx="170" cy="106" r="8" fill="#fca5a5" fill-opacity="0.6"/>
+    <circle cx="234" cy="106" r="8" fill="#fca5a5" fill-opacity="0.6"/>
+
+    <!-- Ears -->
+    <circle cx="156" cy="98" r="10" fill="#ffdfba"/>
+    <circle cx="248" cy="98" r="10" fill="#ffdfba"/>
+
+    <!-- Green Cap with Visor -->
+    <path d="M152 78 C152 48 174 34 202 34 C230 34 252 48 252 78 H152 Z" fill="#1bb76e"/>
+    <path d="M148 76 C162 68 228 66 260 74 C262 76 258 84 248 86 C210 88 162 86 148 76 Z" fill="#13824c"/>
+    <!-- Cap Badge (Star) -->
+    <circle cx="202" cy="54" r="8" fill="#ffffff"/>
+    <path d="M202 48 L204.5 53.5 L210 54 L206 58 L207 63.5 L202 61 L197 63.5 L198 58 L194 54 L199.5 53.5 Z" fill="#1bb76e"/>
+
+    <!-- Wink Eye (Vault Boy style!) -->
+    <path d="M174 96 C180 90 188 90 194 96" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M172 87 C180 82 188 83 194 88" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Open Smiling Eye (Looking directly at search!) -->
+    <ellipse cx="224" cy="94" rx="8" ry="9" fill="#1e293b"/>
+    <circle cx="226" cy="91" r="3" fill="#ffffff"/>
+    <circle cx="221" cy="97" r="1.5" fill="#ffffff"/>
+    <path d="M216 84 C222 80 230 81 236 86" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- Big Confident Vault Boy Grin with White Teeth -->
+    <path d="M182 114 C188 132 216 132 222 114 Z" fill="#ffffff" stroke="#1e293b" stroke-width="3.5"/>
+    <line x1="182" y1="114" x2="222" y2="114" stroke="#1e293b" stroke-width="3"/>
+    <path d="M176 113 C180 114 182 114 184 113" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+    <path d="M220 113 C222 114 224 114 228 113" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

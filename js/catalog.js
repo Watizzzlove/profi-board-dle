@@ -252,6 +252,7 @@ function applyCatalogFilters() {
 
   // Update Breadcrumbs & Titles
   updateCatalogTitles(filtered.length);
+  syncMobileFiltersUI();
 
   // Render cards
   renderCatalogListings(filtered);
@@ -311,6 +312,10 @@ function renderCatalogListings(ads) {
         <div class="ad-card-horizontal__media">
           <img class="ad-card-horizontal__img" src="${ad.images[0]}" alt="${ad.title}">
           
+          <button class="btn-favorite ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, ${ad.id})" title="${isFav ? 'Удалить из избранного' : 'Добавить в избранное'}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+
           ${ad.hasVideo ? `
             <div class="ad-card-horizontal__play-btn" title="Смотреть видеообзор">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -329,9 +334,6 @@ function renderCatalogListings(ads) {
           <div class="ad-card-horizontal__main">
             <div class="ad-card-horizontal__header">
               <h3 class="ad-card-horizontal__title" title="${ad.title}">${ad.title}</h3>
-              <button class="btn-favorite ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, ${ad.id})" title="${isFav ? 'Удалить из избранного' : 'Добавить в избранное'}">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              </button>
             </div>
 
             <div class="ad-card-horizontal__price-wrap">
@@ -630,6 +632,100 @@ function toggleAllFilters() {
   if (btn) {
     btn.textContent = allFiltersCollapsed ? "Развернуть все" : "Свернуть все";
   }
+}
+
+// Catalog View Mode Switcher (List vs Grid)
+function setCatalogViewMode(mode) {
+  const container = document.getElementById("catalogListingsContainer");
+  const listBtn = document.getElementById("viewListBtn");
+  const gridBtn = document.getElementById("viewGridBtn");
+  if (!container) return;
+
+  if (mode === "grid") {
+    container.classList.remove("view--list");
+    container.classList.add("view--grid");
+    listBtn?.classList.remove("active");
+    gridBtn?.classList.add("active");
+  } else {
+    container.classList.remove("view--grid");
+    container.classList.add("view--list");
+    gridBtn?.classList.remove("active");
+    listBtn?.classList.add("active");
+  }
+}
+
+// Mobile Sticky Filters Drawer
+function openMobileFiltersModal() {
+  const modal = document.getElementById("mobileFiltersModal");
+  if (modal) {
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+
+    // Sync values from desktop inputs to mobile drawer
+    const pMin = document.getElementById("priceMin")?.value || "";
+    const pMax = document.getElementById("priceMax")?.value || "";
+    const fVip = document.getElementById("filterVip")?.checked || false;
+    const fVideo = document.getElementById("filterVideo")?.checked || false;
+    const fComp = document.getElementById("filterCompany")?.checked || false;
+    const fPriv = document.getElementById("filterPrivate")?.checked || false;
+
+    if (document.getElementById("mobilePriceMin")) document.getElementById("mobilePriceMin").value = pMin;
+    if (document.getElementById("mobilePriceMax")) document.getElementById("mobilePriceMax").value = pMax;
+    if (document.getElementById("mobileFilterVip")) document.getElementById("mobileFilterVip").checked = fVip;
+    if (document.getElementById("mobileFilterVideo")) document.getElementById("mobileFilterVideo").checked = fVideo;
+    if (document.getElementById("mobileFilterCompany")) document.getElementById("mobileFilterCompany").checked = fComp;
+    if (document.getElementById("mobileFilterPrivate")) document.getElementById("mobileFilterPrivate").checked = fPriv;
+
+    syncMobileFiltersUI();
+  }
+}
+
+function closeMobileFiltersModal() {
+  const modal = document.getElementById("mobileFiltersModal");
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+}
+
+function syncMobilePriceToDesktop() {
+  const pMin = document.getElementById("mobilePriceMin")?.value || "";
+  const pMax = document.getElementById("mobilePriceMax")?.value || "";
+  if (document.getElementById("priceMin")) document.getElementById("priceMin").value = pMin;
+  if (document.getElementById("priceMax")) document.getElementById("priceMax").value = pMax;
+  applyCatalogFilters();
+}
+
+function syncMobileCheckboxToDesktop() {
+  const fVip = document.getElementById("mobileFilterVip")?.checked || false;
+  const fVideo = document.getElementById("mobileFilterVideo")?.checked || false;
+  const fComp = document.getElementById("mobileFilterCompany")?.checked || false;
+  const fPriv = document.getElementById("mobileFilterPrivate")?.checked || false;
+
+  if (document.getElementById("filterVip")) document.getElementById("filterVip").checked = fVip;
+  if (document.getElementById("filterVideo")) document.getElementById("filterVideo").checked = fVideo;
+  if (document.getElementById("filterCompany")) document.getElementById("filterCompany").checked = fComp;
+  if (document.getElementById("filterPrivate")) document.getElementById("filterPrivate").checked = fPriv;
+
+  applyCatalogFilters();
+}
+
+function syncMobileFiltersUI() {
+  // Update active tag in mobile sticky filter widget
+  const tag = document.getElementById("mobileFilterActiveTag");
+  if (tag) {
+    tag.textContent = catalogCategory === "all" ? "Все категории" : catalogCategory;
+  }
+  // Highlight category items in mobile drawer
+  document.querySelectorAll("#mobileCatList .cat-item").forEach(item => {
+    const text = item.querySelector("span")?.textContent.trim() || "";
+    if ((catalogCategory === "all" && text.includes("Все")) || 
+        (catalogCategory !== "all" && text.toLowerCase().includes(catalogCategory.toLowerCase()))) {
+      item.classList.add("active");
+    } else {
+      item.classList.remove("active");
+    }
+  });
 }
 
 // Mobile drawer toggle

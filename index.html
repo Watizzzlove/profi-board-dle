@@ -94,8 +94,13 @@
     </div>
   </div>
 
-  <!-- ================= HERO & SEARCH (WITH MASCOT PEAKING INTO SEARCH) ================= -->
+  <!-- ================= HERO & SEARCH (CENTERED SEARCH WITH MASCOT BEHIND PINNED TO RIGHT EDGE) ================= -->
   <section class="hero">
+    <!-- Mascot background graphic pinned right against screen edge behind content -->
+    <div class="hero__mascot-edge" aria-hidden="true">
+      <img src="images/branding/mascot_hero_lens.svg" alt="Профиум Маскот с лупой" class="hero__mascot-img">
+    </div>
+
     <div class="container hero__container">
       <div class="hero__content">
         <h1 class="hero__headline">
@@ -122,23 +127,18 @@
           <span class="tag-chip" onclick="navigateToCatalogQuery('Потолки')">Натяжные потолки</span>
         </div>
       </div>
-
-      <!-- Mascot leaning in behind search with magnifying glass (as sketched!) -->
-      <div class="hero__mascot-wrap" aria-hidden="true">
-        <img src="images/branding/mascot_peeking_lens.svg" alt="Профиум Маскот с лупой" class="hero__mascot-img">
-      </div>
     </div>
   </section>
 
-  <!-- ================= BENTO CATEGORIES (3-ROW HIERARCHY) ================= -->
+  <!-- ================= BENTO CATEGORIES (ROW HEADER ON DESKTOP) ================= -->
   <section class="section">
     <div class="container">
-      <div class="section__header-col">
-        <h2 class="section__title">Категории услуг</h2>
-        <div class="section__subtitle">6 основных направлений</div>
-        <div class="section__action-row">
-          <a href="catalog.html" class="section__link">Перейти в полный каталог (24) →</a>
+      <div class="section__header">
+        <div class="section__title-group">
+          <h2 class="section__title">Категории услуг</h2>
+          <span class="section__counter">6 основных направлений</span>
         </div>
+        <a href="catalog.html" class="section__link">Перейти в полный каталог (24) →</a>
       </div>
 
       <div class="bento-grid">
@@ -262,12 +262,12 @@
   <!-- ================= LISTINGS FEED ================= -->
   <section class="section" style="padding-top: 20px;">
     <div class="container">
-      <div class="section__header-col">
-        <h2 class="section__title" id="feedTitle">Актуальные объявления</h2>
-        <div class="section__subtitle" id="listingsCountBadge">6 предложений</div>
-        <div class="section__action-row">
-          <a href="catalog.html" class="section__link">Открыть все в каталоге с фильтрами →</a>
+      <div class="section__header">
+        <div class="section__title-group">
+          <h2 class="section__title" id="feedTitle">Актуальные объявления</h2>
+          <span class="section__counter" id="listingsCountBadge">6 предложений</span>
         </div>
+        <a href="catalog.html" class="section__link">Открыть все в каталоге с фильтрами →</a>
       </div>
 
       <!-- Compact Bento Grid Filter Tabs (Profi Style) -->
