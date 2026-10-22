@@ -416,7 +416,7 @@ function applySearchTag(tag) {
 
 function switchFeedTab(tabType, element) {
   currentTab = tabType;
-  document.querySelectorAll(".feed-tab").forEach(tab => tab.classList.remove("active"));
+  document.querySelectorAll(".feed-bento-tab, .feed-tab").forEach(tab => tab.classList.remove("active"));
   element.classList.add("active");
   applyAllFilters();
 }
@@ -789,6 +789,25 @@ function navigateToCatalogCategory(cat) {
   window.location.href = `catalog.html?category=${encodeURIComponent(cat)}`;
 }
 
+// Mobile drawer toggle
+function toggleMobileMenu(isOpen) {
+  const drawer = document.getElementById("mobileDrawer");
+  if (!drawer) return;
+  if (typeof isOpen === "boolean") {
+    drawer.classList.toggle("active", isOpen);
+  } else {
+    drawer.classList.toggle("active");
+  }
+}
+
+// Dynamic Header Border on Scroll
+window.addEventListener("scroll", () => {
+  const header = document.querySelector(".header");
+  if (header) {
+    header.classList.toggle("header--scrolled", window.scrollY > 8);
+  }
+});
+
 function initEventListeners() {
   document.getElementById("searchSubmitBtn")?.addEventListener("click", () => {
     const val = document.getElementById("searchInput").value.trim();
@@ -796,11 +815,32 @@ function initEventListeners() {
     else window.location.href = "catalog.html";
   });
 
-  document.getElementById("searchInput")?.addEventListener("keyup", (e) => {
-    if (e.key === "Enter") {
-      const val = document.getElementById("searchInput").value.trim();
-      if (val) navigateToCatalogQuery(val);
-      else window.location.href = "catalog.html";
+  const searchInput = document.getElementById("searchInput");
+  const searchTags = document.getElementById("searchTagsContainer");
+
+  if (searchInput) {
+    searchInput.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        const val = searchInput.value.trim();
+        if (val) navigateToCatalogQuery(val);
+        else window.location.href = "catalog.html";
+      }
+    });
+
+    // Mobile: Show popular queries on input focus
+    searchInput.addEventListener("focus", () => {
+      if (searchTags) {
+        searchTags.classList.add("search-tags--visible-mobile");
+      }
+    });
+  }
+
+  // Close mobile search tags when tapping outside
+  document.addEventListener("click", (e) => {
+    if (searchInput && searchTags) {
+      if (!searchInput.contains(e.target) && !searchTags.contains(e.target)) {
+        searchTags.classList.remove("search-tags--visible-mobile");
+      }
     }
   });
 

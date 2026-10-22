@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 280" fill="none">
+  <!-- Profium Mascot Peeking with Magnifying Glass (From the right edge into search) -->
+  <defs>
+    <!-- Glass Lens Gradient -->
+    <radialGradient id="lensGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="70%" stop-color="#38bdf8" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.35"/>
+    </radialGradient>
+    <!-- Cap Visor Shadow -->
+    <linearGradient id="visorGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1bb76e"/>
+      <stop offset="100%" stop-color="#13824c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Torso / Green Polo leaning in from right -->
+  <g id="body">
+    <path d="M210 280 C210 230 250 205 295 195 L360 215 L360 280 Z" fill="#1bb76e"/>
+    <path d="M245 220 L275 280" stroke="#13824c" stroke-width="4" stroke-linecap="round"/>
+    <!-- Collar -->
+    <path d="M245 210 L260 232 L275 210" fill="#ffffff" stroke="#13824c" stroke-width="3"/>
+  </g>
+
+  <!-- Arm reaching forward holding magnifying glass -->
+  <g id="arm">
+    <!-- Forearm -->
+    <path d="M250 225 C215 225 170 215 135 190 C125 182 120 170 125 158 C130 148 142 146 152 152 C180 170 220 185 265 195 Z" fill="#ffdfba"/>
+    <!-- Sleeve cuff -->
+    <ellipse cx="260" cy="205" rx="14" ry="24" fill="#13824c" transform="rotate(-20 260 205)"/>
+  </g>
+
+  <!-- Head (Tilted slightly forward towards search) -->
+  <g id="head" transform="rotate(-6 265 140)">
+    <!-- Neck -->
+    <rect x="250" y="165" width="28" height="30" fill="#ffdfba" rx="8"/>
+    
+    <!-- Face / Head Base -->
+    <ellipse cx="265" cy="130" rx="55" ry="50" fill="#ffdfba"/>
+    
+    <!-- Blush Cheeks -->
+    <circle cx="230" cy="146" r="9" fill="#fca5a5" fill-opacity="0.5"/>
+    <circle cx="295" cy="142" r="9" fill="#fca5a5" fill-opacity="0.5"/>
+    
+    <!-- Friendly Concentrated Smile -->
+    <path d="M250 156 C262 165 278 164 286 155" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- SQUINTING EYE (Right eye: concentrated wink/squint ^) -->
+    <path d="M285 132 C292 126 300 126 307 132" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <path d="M288 139 C294 135 300 135 304 139" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- Squint Eyebrow -->
+    <path d="M284 122 C293 118 303 119 310 124" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- WIDE OPEN EYE (Left eye: looking straight through the lens) -->
+    <!-- Eyebrow raised in curiosity -->
+    <path d="M225 116 C235 110 248 112 255 118" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+    <!-- The eye itself (magnified and focused!) -->
+    <ellipse cx="240" cy="132" rx="13" ry="15" fill="#ffffff"/>
+    <ellipse cx="240" cy="132" rx="13" ry="15" stroke="#1e293b" stroke-width="2"/>
+    <circle cx="238" cy="132" r="8" fill="#1e293b"/>
+    <!-- Big cute iris light reflection -->
+    <circle cx="235" cy="129" r="3" fill="#ffffff"/>
+    <circle cx="242" cy="135" r="1.5" fill="#ffffff"/>
+
+    <!-- SIGNATURE GREEN CAP -->
+    <!-- Cap Dome -->
+    <path d="M210 115 C210 65 240 45 275 45 C310 45 330 68 330 115 Z" fill="#1bb76e"/>
+    <!-- Cap Front Rim / Visor pointing left towards search -->
+    <path d="M185 112 C205 95 295 95 335 110 C335 118 320 126 295 126 C235 126 195 124 185 112 Z" fill="url(#visorGrad)"/>
+    <path d="M185 112 C210 102 280 102 335 110" stroke="#13824c" stroke-width="3" fill="none"/>
+    
+    <!-- Cap Badge (White circle + Green Star) -->
+    <circle cx="270" cy="78" r="9" fill="#ffffff"/>
+    <path d="M270 71 L272.5 76 L278 77 L274 81 L275 86.5 L270 84 L265 86.5 L266 81 L262 77 L267.5 76 Z" fill="#1bb76e"/>
+  </g>
+
+  <!-- MAGNIFYING GLASS & HAND (In foreground, held right over search field) -->
+  <g id="magnifying-glass">
+    <!-- Hand gripping the handle -->
+    <path d="M128 152 C120 152 114 158 114 166 C114 174 120 180 128 180 C136 180 142 174 142 166 Z" fill="#ffdfba"/>
+    <!-- Fingers wrapped -->
+    <rect x="110" y="152" width="22" height="9" rx="4.5" fill="#ffdfba" stroke="#f0c296" stroke-width="2"/>
+    <rect x="108" y="161" width="22" height="9" rx="4.5" fill="#ffdfba" stroke="#f0c296" stroke-width="2"/>
+    <rect x="112" y="170" width="20" height="9" rx="4.5" fill="#ffdfba" stroke="#f0c296" stroke-width="2"/>
+
+    <!-- Magnifying Glass Handle -->
+    <path d="M125 168 L155 198" stroke="#334155" stroke-width="12" stroke-linecap="round"/>
+    <path d="M127 170 L153 196" stroke="#1bb76e" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- Glass Rim & Lens -->
+    <g transform="translate(70, 72)">
+      <!-- Outer Metal Frame -->
+      <circle cx="48" cy="48" r="46" fill="none" stroke="#1e293b" stroke-width="9"/>
+      <circle cx="48" cy="48" r="46" fill="none" stroke="#64748b" stroke-width="3"/>
+      
+      <!-- Translucent Glass Lens -->
+      <circle cx="48" cy="48" r="41" fill="url(#lensGlow)"/>
+      <circle cx="48" cy="48" r="41" stroke="#38bdf8" stroke-width="2.5" stroke-opacity="0.8"/>
+      
+      <!-- Big Curved Glass Glare / Reflection -->
+      <path d="M22 36 C22 22 36 16 52 16" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="64" cy="22" r="3" fill="#ffffff"/>
+      
+      <!-- Subtle Search Light Focus Beam pointing down-left -->
+      <path d="M20 70 L4 110 L50 110 L38 78 Z" fill="#38bdf8" fill-opacity="0.12"/>
+    </g>
+  </g>
+</svg>

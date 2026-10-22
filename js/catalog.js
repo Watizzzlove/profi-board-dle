@@ -284,14 +284,14 @@ function updateCatalogTitles(count) {
   }
 }
 
-// Render Listings with Real Photos & Favorite Heart Button
+// Render Listings with Horizontal Clean Cards (One beneath another, 4px gap)
 function renderCatalogListings(ads) {
   const container = document.getElementById("catalogListingsContainer");
   if (!container) return;
 
   if (ads.length === 0) {
     container.innerHTML = `
-      <div style="grid-column: 1 / -1; padding: 56px 24px; text-align: center; background: #fff; border-radius: 20px; box-shadow: var(--shadow-sm);">
+      <div style="grid-column: 1 / -1; padding: 56px 24px; text-align: center; background: #fff; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
         <img src="images/branding/mascot_search_empty.svg" alt="Ничего не найдено" style="width: 140px; height: 140px; margin-bottom: 16px;">
         <div style="font-size: 21px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Ничего не нашлось</div>
         <div style="font-size: 14.5px; color: var(--text-secondary); max-width: 420px; margin: 0 auto 22px; line-height: 1.5;">
@@ -306,51 +306,58 @@ function renderCatalogListings(ads) {
   container.innerHTML = ads.map(ad => {
     const isFav = favoritesSet.has(ad.id);
     return `
-      <div class="ad-card ${ad.isVip ? 'ad-card--vip' : ''}" onclick="openAdDetail(${ad.id})">
-        <!-- Favorite Heart Button -->
-        <button class="btn-favorite ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, ${ad.id})" title="${isFav ? 'Удалить из избранного' : 'Добавить в избранное'}">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </button>
-
-        <div class="ad-card__media">
-          <img class="ad-card__img" src="${ad.images[0]}" alt="${ad.title}">
+      <div class="ad-card-horizontal ${ad.isVip ? 'ad-card--vip' : ''}" onclick="openAdDetail(${ad.id})">
+        <!-- Media / Image on Left -->
+        <div class="ad-card-horizontal__media">
+          <img class="ad-card-horizontal__img" src="${ad.images[0]}" alt="${ad.title}">
           
           ${ad.hasVideo ? `
-            <div class="ad-card__play-btn" title="Смотреть видеообзор">
+            <div class="ad-card-horizontal__play-btn" title="Смотреть видеообзор">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </div>
           ` : ''}
 
-          <div class="ad-card__badges">
+          <div class="ad-card-horizontal__badges">
             ${ad.isVip ? `<span class="badge badge--vip">VIP</span>` : ''}
             ${ad.isAdvertiser ? `<span class="badge badge--verified">Компания</span>` : ''}
             ${ad.hasVideo ? `<span class="badge badge--video">▶ Видео</span>` : ''}
           </div>
         </div>
 
-        <div class="ad-card__content">
-          <div class="ad-card__price-row">
-            <div class="ad-card__price">${ad.price} <span class="ad-card__unit">${ad.priceUnit || ''}</span></div>
+        <!-- Body / Content on Right -->
+        <div class="ad-card-horizontal__body">
+          <div class="ad-card-horizontal__main">
+            <div class="ad-card-horizontal__header">
+              <h3 class="ad-card-horizontal__title" title="${ad.title}">${ad.title}</h3>
+              <button class="btn-favorite ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, ${ad.id})" title="${isFav ? 'Удалить из избранного' : 'Добавить в избранное'}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+            </div>
+
+            <div class="ad-card-horizontal__price-wrap">
+              <span class="ad-card-horizontal__price">${ad.price}</span>
+              <span class="ad-card-horizontal__unit">${ad.priceUnit || ''}</span>
+            </div>
+
+            <p class="ad-card-horizontal__desc">${ad.desc}</p>
           </div>
 
-          <h3 class="ad-card__title" title="${ad.title}">${ad.title}</h3>
-          <p class="ad-card__desc">${ad.desc}</p>
-
-          <div class="ad-card__seller">
-            <div class="ad-card__seller-avatar">
-              ${ad.sellerName.charAt(0)}
+          <div class="ad-card-horizontal__footer">
+            <div class="ad-card-horizontal__seller">
+              <div class="ad-card__seller-avatar">
+                ${ad.sellerName.charAt(0)}
+              </div>
+              <div class="ad-card__seller-info">
+                <div class="ad-card__seller-name">${ad.sellerName}</div>
+                <div class="ad-card__seller-role">${ad.sellerRole} • ${ad.city}</div>
+              </div>
             </div>
-            <div class="ad-card__seller-info">
-              <div class="ad-card__seller-name">${ad.sellerName}</div>
-              <div class="ad-card__seller-role">${ad.sellerRole}</div>
-            </div>
-          </div>
 
-          <div class="ad-card__footer">
-            <span class="ad-card__geo">${ad.city}</span>
-            <button class="btn-phone" onclick="revealPhone(event, ${ad.id}, this)">
-              ${ad.phoneMasked}
-            </button>
+            <div class="ad-card-horizontal__actions">
+              <button class="btn-phone" onclick="revealPhone(event, ${ad.id}, this)">
+                ${ad.phoneMasked}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -601,6 +608,48 @@ function showToast(message) {
     setTimeout(() => toast.remove(), 300);
   }, 3500);
 }
+
+// Collapsible Filter Accordions
+function toggleFilterGroup(groupId) {
+  const group = document.getElementById(groupId);
+  if (group) group.classList.toggle("collapsed");
+}
+
+let allFiltersCollapsed = false;
+function toggleAllFilters() {
+  allFiltersCollapsed = !allFiltersCollapsed;
+  const groups = document.querySelectorAll(".filter-group");
+  groups.forEach(g => {
+    if (allFiltersCollapsed) {
+      g.classList.add("collapsed");
+    } else {
+      g.classList.remove("collapsed");
+    }
+  });
+  const btn = document.getElementById("toggleAllFiltersBtn");
+  if (btn) {
+    btn.textContent = allFiltersCollapsed ? "Развернуть все" : "Свернуть все";
+  }
+}
+
+// Mobile drawer toggle
+function toggleMobileMenu(isOpen) {
+  const drawer = document.getElementById("mobileDrawer");
+  if (!drawer) return;
+  if (typeof isOpen === "boolean") {
+    drawer.classList.toggle("active", isOpen);
+  } else {
+    drawer.classList.toggle("active");
+  }
+}
+
+// Dynamic Header Border on Scroll
+window.addEventListener("scroll", () => {
+  const header = document.querySelector(".header");
+  if (header) {
+    header.classList.toggle("header--scrolled", window.scrollY > 8);
+  }
+});
 
 function initCatalogEventListeners() {
   document.getElementById("catalogSearchInput")?.addEventListener("keyup", e => {

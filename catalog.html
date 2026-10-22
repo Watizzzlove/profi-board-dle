@@ -46,8 +46,58 @@
           Подать объявление
         </button>
       </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="header__burger" id="burgerToggleBtn" aria-label="Открыть мобильное меню" onclick="toggleMobileMenu(true)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer__overlay" onclick="toggleMobileMenu(false)"></div>
+    <div class="mobile-drawer__content">
+      <div class="mobile-drawer__header">
+        <div class="header__logo">
+          <img src="images/branding/mascot.svg" alt="Профиум" class="header__logo-mascot">
+          <span>Профиум</span><span class="header__logo-dot"></span>
+        </div>
+        <button class="modal__close" onclick="toggleMobileMenu(false)">&times;</button>
+      </div>
+      <div class="mobile-drawer__body">
+        <div class="mobile-drawer__geo" onclick="openModal('modalRegion'); toggleMobileMenu(false);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="mobileCityText">Москва</span>
+          <span style="margin-left: auto; font-size: 13px; color: var(--primary); font-weight: 600;">Сменить</span>
+        </div>
+        <nav class="mobile-drawer__nav">
+          <a href="index.html" class="mobile-nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Главная
+          </a>
+          <button class="mobile-nav-item" onclick="filterByFavorites(); toggleMobileMenu(false);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Избранные объявления
+          </button>
+          <button class="mobile-nav-item" onclick="openModal('modalCabinet'); toggleMobileMenu(false);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Кабинет & Баланс
+          </button>
+          <button class="mobile-nav-item" onclick="openModal('modalReg'); toggleMobileMenu(false);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            Регистрация (Клиент / Рекламодатель)
+          </button>
+        </nav>
+        <button class="btn btn--primary" style="width: 100%; margin-top: 24px; padding: 14px;" onclick="openModal('modalAddNews'); toggleMobileMenu(false);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Подать объявление
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- ================= SEARCH BAR STRIP ================= -->
   <section style="background: #fff; border-bottom: 1px solid var(--border-light); padding: 24px 0;">
@@ -77,76 +127,94 @@
       </nav>
 
       <div class="catalog-layout">
-        <!-- LEFT SIDEBAR: FILTERS -->
-        <aside class="sidebar-card">
-          <div class="sidebar-title">Фильтры поиска</div>
+        <!-- LEFT SIDEBAR: FILTERS (COLLAPSIBLE ACCORDION & STICKY) -->
+        <aside class="sidebar-card sidebar-card--sticky">
+          <div class="sidebar-title-row">
+            <div class="sidebar-title">Фильтры поиска</div>
+            <button type="button" class="sidebar-toggle-all-btn" id="toggleAllFiltersBtn" onclick="toggleAllFilters()">Свернуть все</button>
+          </div>
 
-          <!-- Categories -->
-          <div>
-            <div class="filter-group-title">Категория</div>
-            <div class="cat-list">
-              <div class="cat-item active" onclick="setCatalogCategory('all', this)">
-                <span>Все категории</span>
-                <span class="cat-item__count">6</span>
-              </div>
-              <div class="cat-item" onclick="setCatalogCategory('Ремонт', this)">
-                <span>Ремонт и отделка</span>
-                <span class="cat-item__count">3</span>
-              </div>
-              <div class="cat-item" onclick="setCatalogCategory('Авто', this)">
-                <span>Автосервис и диагностика</span>
-                <span class="cat-item__count">1</span>
-              </div>
-              <div class="cat-item" onclick="setCatalogCategory('Грузоперевозки', this)">
-                <span>Перевозки и грузчики</span>
-                <span class="cat-item__count">1</span>
-              </div>
-              <div class="cat-item" onclick="setCatalogCategory('Обучение', this)">
-                <span>Обучение и репетиторы</span>
-                <span class="cat-item__count">1</span>
-              </div>
-              <div class="cat-item" onclick="setCatalogCategory('Недвижимость', this)">
-                <span>Недвижимость</span>
-                <span class="cat-item__count">0</span>
-              </div>
-              <div class="cat-item" onclick="setCatalogCategory('Красота', this)">
-                <span>Красота и клининг</span>
-                <span class="cat-item__count">0</span>
+          <!-- Group 1: Categories -->
+          <div class="filter-group" id="filterGroupCat">
+            <div class="filter-group-header" onclick="toggleFilterGroup('filterGroupCat')">
+              <span class="filter-group-title">Категория</span>
+              <svg class="filter-group-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="filter-group-body">
+              <div class="cat-list">
+                <div class="cat-item active" onclick="setCatalogCategory('all', this)">
+                  <span>Все категории</span>
+                  <span class="cat-item__count">6</span>
+                </div>
+                <div class="cat-item" onclick="setCatalogCategory('Ремонт', this)">
+                  <span>Ремонт и отделка</span>
+                  <span class="cat-item__count">3</span>
+                </div>
+                <div class="cat-item" onclick="setCatalogCategory('Авто', this)">
+                  <span>Автосервис и диагностика</span>
+                  <span class="cat-item__count">1</span>
+                </div>
+                <div class="cat-item" onclick="setCatalogCategory('Грузоперевозки', this)">
+                  <span>Перевозки и грузчики</span>
+                  <span class="cat-item__count">1</span>
+                </div>
+                <div class="cat-item" onclick="setCatalogCategory('Обучение', this)">
+                  <span>Обучение и репетиторы</span>
+                  <span class="cat-item__count">1</span>
+                </div>
+                <div class="cat-item" onclick="setCatalogCategory('Недвижимость', this)">
+                  <span>Недвижимость</span>
+                  <span class="cat-item__count">0</span>
+                </div>
+                <div class="cat-item" onclick="setCatalogCategory('Красота', this)">
+                  <span>Красота и клининг</span>
+                  <span class="cat-item__count">0</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Price filter -->
-          <div>
-            <div class="filter-group-title">Цена, ₽</div>
-            <div class="price-inputs">
-              <input type="number" class="price-input" id="priceMin" placeholder="От 0" oninput="applyCatalogFilters()">
-              <input type="number" class="price-input" id="priceMax" placeholder="До 10 000" oninput="applyCatalogFilters()">
+          <!-- Group 2: Price filter -->
+          <div class="filter-group" id="filterGroupPrice">
+            <div class="filter-group-header" onclick="toggleFilterGroup('filterGroupPrice')">
+              <span class="filter-group-title">Цена, ₽</span>
+              <svg class="filter-group-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="filter-group-body">
+              <div class="price-inputs">
+                <input type="number" class="price-input" id="priceMin" placeholder="От 0" oninput="applyCatalogFilters()">
+                <input type="number" class="price-input" id="priceMax" placeholder="До 10 000" oninput="applyCatalogFilters()">
+              </div>
             </div>
           </div>
 
-          <!-- Checkbox Options -->
-          <div>
-            <div class="filter-group-title">Параметры объявления</div>
-            <label class="checkbox-label">
-              <input type="checkbox" id="filterVip" onchange="applyCatalogFilters()">
-              <span>Только VIP предложения</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="filterVideo" onchange="applyCatalogFilters()">
-              <span>С видеообзором</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="filterCompany" onchange="applyCatalogFilters()">
-              <span>Только компании</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="filterPrivate" onchange="applyCatalogFilters()">
-              <span>Частные специалисты</span>
-            </label>
+          <!-- Group 3: Checkbox Options -->
+          <div class="filter-group" id="filterGroupFeatures">
+            <div class="filter-group-header" onclick="toggleFilterGroup('filterGroupFeatures')">
+              <span class="filter-group-title">Параметры объявления</span>
+              <svg class="filter-group-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="filter-group-body">
+              <label class="checkbox-label">
+                <input type="checkbox" id="filterVip" onchange="applyCatalogFilters()">
+                <span>Только VIP предложения</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="filterVideo" onchange="applyCatalogFilters()">
+                <span>С видеообзором</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="filterCompany" onchange="applyCatalogFilters()">
+                <span>Только компании</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="filterPrivate" onchange="applyCatalogFilters()">
+                <span>Частные специалисты</span>
+              </label>
+            </div>
           </div>
 
-          <button class="btn btn--outline" style="width: 100%;" onclick="resetCatalogFilters()">
+          <button class="btn btn--outline" style="width: 100%; border-radius: 12px;" onclick="resetCatalogFilters()">
             Сбросить фильтры
           </button>
         </aside>
@@ -188,8 +256,8 @@
             </div>
           </div>
 
-          <!-- Listings container -->
-          <div class="listings-grid" id="catalogListingsContainer" style="grid-template-columns: repeat(2, 1fr);">
+          <!-- Listings container (Horizontal 1-column single cards) -->
+          <div class="catalog-listings" id="catalogListingsContainer">
             <!-- Rendered via JS -->
           </div>
         </section>

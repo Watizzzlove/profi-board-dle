@@ -45,47 +45,100 @@
           Подать объявление
         </button>
       </div>
+
+      <!-- Mobile Hamburger Toggle Button -->
+      <button class="header__burger" id="burgerToggleBtn" aria-label="Открыть мобильное меню" onclick="toggleMobileMenu(true)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
-  <!-- ================= HERO & SEARCH (2 CONTAINERS, REDIRECTS TO CATALOG) ================= -->
-  <section class="hero">
-    <div class="container">
-      <h1 class="hero__headline">
-        Объявления и специалисты <span id="heroCitySpan">в Москве и области</span>
-      </h1>
-
-      <div class="search-wrapper">
-        <div class="search-input-box">
-          <div class="search-input-box__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </div>
-          <input type="text" class="search-input-box__input" id="searchInput" placeholder="Какую услугу или специалиста вы ищете? Например, ремонт кухни, автосервис, репетитор...">
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer__overlay" onclick="toggleMobileMenu(false)"></div>
+    <div class="mobile-drawer__content">
+      <div class="mobile-drawer__header">
+        <div class="header__logo">
+          <img src="images/branding/mascot.svg" alt="Профиум" class="header__logo-mascot">
+          <span>Профиум</span><span class="header__logo-dot"></span>
         </div>
-        <button class="btn btn--search-standalone" id="searchSubmitBtn">Найти</button>
+        <button class="modal__close" onclick="toggleMobileMenu(false)">&times;</button>
+      </div>
+      <div class="mobile-drawer__body">
+        <div class="mobile-drawer__geo" onclick="openModal('modalRegion'); toggleMobileMenu(false);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="mobileCityText">Москва</span>
+          <span style="margin-left: auto; font-size: 13px; color: var(--primary); font-weight: 600;">Сменить</span>
+        </div>
+        <nav class="mobile-drawer__nav">
+          <a href="catalog.html" class="mobile-nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Каталог объявлений
+          </a>
+          <button class="mobile-nav-item" onclick="openModal('modalCabinet'); toggleMobileMenu(false);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Кабинет & Баланс
+          </button>
+          <button class="mobile-nav-item" onclick="openModal('modalReg'); toggleMobileMenu(false);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            Регистрация (Клиент / Рекламодатель)
+          </button>
+        </nav>
+        <button class="btn btn--primary" style="width: 100%; margin-top: 24px; padding: 14px;" onclick="openModal('modalAddNews'); toggleMobileMenu(false);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Подать объявление
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= HERO & SEARCH (WITH MASCOT PEAKING INTO SEARCH) ================= -->
+  <section class="hero">
+    <div class="container hero__container">
+      <div class="hero__content">
+        <h1 class="hero__headline">
+          Объявления и специалисты <span id="heroCitySpan">в Москве и области</span>
+        </h1>
+
+        <div class="search-wrapper">
+          <div class="search-input-box">
+            <div class="search-input-box__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <input type="text" class="search-input-box__input" id="searchInput" placeholder="Какую услугу или специалиста вы ищете? Например, ремонт кухни, автосервис, репетитор...">
+          </div>
+          <button class="btn btn--search-standalone" id="searchSubmitBtn">Найти</button>
+        </div>
+
+        <div class="search-tags" id="searchTagsContainer">
+          <span class="search-tags__title">Популярные запросы:</span>
+          <span class="tag-chip" onclick="navigateToCatalogQuery('Ремонт квартир')">Ремонт квартир</span>
+          <span class="tag-chip" onclick="navigateToCatalogQuery('Автоэлектрик')">Автоэлектрик</span>
+          <span class="tag-chip" onclick="navigateToCatalogQuery('Сантехник')">Сантехник</span>
+          <span class="tag-chip" onclick="navigateToCatalogQuery('Грузоперевозки')">Грузоперевозки</span>
+          <span class="tag-chip" onclick="navigateToCatalogQuery('Репетитор')">Репетитор ЕГЭ</span>
+          <span class="tag-chip" onclick="navigateToCatalogQuery('Потолки')">Натяжные потолки</span>
+        </div>
       </div>
 
-      <div class="search-tags">
-        <span class="search-tags__title">Популярные запросы:</span>
-        <span class="tag-chip" onclick="navigateToCatalogQuery('Ремонт квартир')">Ремонт квартир</span>
-        <span class="tag-chip" onclick="navigateToCatalogQuery('Автоэлектрик')">Автоэлектрик</span>
-        <span class="tag-chip" onclick="navigateToCatalogQuery('Сантехник')">Сантехник</span>
-        <span class="tag-chip" onclick="navigateToCatalogQuery('Грузоперевозки')">Грузоперевозки</span>
-        <span class="tag-chip" onclick="navigateToCatalogQuery('Репетитор')">Репетитор ЕГЭ</span>
-        <span class="tag-chip" onclick="navigateToCatalogQuery('Потолки')">Натяжные потолки</span>
+      <!-- Mascot leaning in behind search with magnifying glass (as sketched!) -->
+      <div class="hero__mascot-wrap" aria-hidden="true">
+        <img src="images/branding/mascot_peeking_lens.svg" alt="Профиум Маскот с лупой" class="hero__mascot-img">
       </div>
     </div>
   </section>
 
-  <!-- ================= BENTO CATEGORIES (LEADS TO CATALOG) ================= -->
+  <!-- ================= BENTO CATEGORIES (3-ROW HIERARCHY) ================= -->
   <section class="section">
     <div class="container">
-      <div class="section__header">
-        <div class="section__title-wrap">
-          <h2 class="section__title">Категории услуг</h2>
-          <span class="section__counter">6 основных направлений</span>
+      <div class="section__header-col">
+        <h2 class="section__title">Категории услуг</h2>
+        <div class="section__subtitle">6 основных направлений</div>
+        <div class="section__action-row">
+          <a href="catalog.html" class="section__link">Перейти в полный каталог (24) →</a>
         </div>
-        <a href="catalog.html" class="section__link">Перейти в полный каталог (24) →</a>
       </div>
 
       <div class="bento-grid">
@@ -209,21 +262,65 @@
   <!-- ================= LISTINGS FEED ================= -->
   <section class="section" style="padding-top: 20px;">
     <div class="container">
-      <div class="section__header">
-        <div class="section__title-wrap">
-          <h2 class="section__title" id="feedTitle">Актуальные объявления</h2>
-          <span class="section__counter" id="listingsCountBadge">6 предложений</span>
+      <div class="section__header-col">
+        <h2 class="section__title" id="feedTitle">Актуальные объявления</h2>
+        <div class="section__subtitle" id="listingsCountBadge">6 предложений</div>
+        <div class="section__action-row">
+          <a href="catalog.html" class="section__link">Открыть все в каталоге с фильтрами →</a>
         </div>
-        <a href="catalog.html" class="section__link">Открыть все в каталоге с фильтрами →</a>
       </div>
 
-      <!-- Borderless Pastel Filter Tabs -->
-      <div class="feed-tabs">
-        <button class="feed-tab feed-tab--all active" onclick="switchFeedTab('all', this)">Все предложения</button>
-        <button class="feed-tab feed-tab--vip" onclick="switchFeedTab('vip', this)">VIP предложения</button>
-        <button class="feed-tab feed-tab--video" onclick="switchFeedTab('video', this)">С видеообзором</button>
-        <button class="feed-tab feed-tab--adv" onclick="switchFeedTab('advertiser', this)">Рекламодатели и компании</button>
-        <button class="feed-tab feed-tab--private" onclick="switchFeedTab('private', this)">Частные мастера</button>
+      <!-- Compact Bento Grid Filter Tabs (Profi Style) -->
+      <div class="feed-tabs-bento">
+        <button class="feed-bento-tab feed-bento-tab--all active" onclick="switchFeedTab('all', this)">
+          <div class="feed-bento-tab__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <div class="feed-bento-tab__info">
+            <span class="feed-bento-tab__name">Все предложения</span>
+            <span class="feed-bento-tab__sub">6 объявлений</span>
+          </div>
+        </button>
+
+        <button class="feed-bento-tab feed-bento-tab--vip" onclick="switchFeedTab('vip', this)">
+          <div class="feed-bento-tab__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="feed-bento-tab__info">
+            <span class="feed-bento-tab__name">VIP объявления</span>
+            <span class="feed-bento-tab__sub">Премиум статус</span>
+          </div>
+        </button>
+
+        <button class="feed-bento-tab feed-bento-tab--video" onclick="switchFeedTab('video', this)">
+          <div class="feed-bento-tab__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="feed-bento-tab__info">
+            <span class="feed-bento-tab__name">С видеообзором</span>
+            <span class="feed-bento-tab__sub">Видеовизитки</span>
+          </div>
+        </button>
+
+        <button class="feed-bento-tab feed-bento-tab--adv" onclick="switchFeedTab('advertiser', this)">
+          <div class="feed-bento-tab__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7v14M21 7v14M6 21V11M18 21V11M6 11h12M10 7V3h4v4"/></svg>
+          </div>
+          <div class="feed-bento-tab__info">
+            <span class="feed-bento-tab__name">Компании и СК</span>
+            <span class="feed-bento-tab__sub">Официальные юрлица</span>
+          </div>
+        </button>
+
+        <button class="feed-bento-tab feed-bento-tab--private" onclick="switchFeedTab('private', this)">
+          <div class="feed-bento-tab__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="feed-bento-tab__info">
+            <span class="feed-bento-tab__name">Частные мастера</span>
+            <span class="feed-bento-tab__sub">Прямой контакт</span>
+          </div>
+        </button>
       </div>
 
       <!-- Ads Grid -->
