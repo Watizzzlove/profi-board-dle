@@ -181,7 +181,25 @@ let uploadedPhotos = [];
 let favoritesSet = new Set(JSON.parse(localStorage.getItem("profium_favs") || "[]"));
 let showOnlyFavorites = false;
 
+// Helper: Load persistent custom ads from localStorage
+function loadCustomAds() {
+  try {
+    const saved = localStorage.getItem("profium_custom_ads");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const existingIds = new Set(adsDatabase.map(a => a.id));
+        const newOnes = parsed.filter(a => !existingIds.has(a.id));
+        adsDatabase = [...newOnes, ...adsDatabase];
+      }
+    }
+  } catch (e) {
+    console.error("Error loading custom ads:", e);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  loadCustomAds();
   initFromUrlParams();
   updateFavoritesHeader();
   initCatalogEventListeners();
@@ -797,4 +815,136 @@ function initCatalogEventListeners() {
   document.getElementById("openCabinetBtn")?.addEventListener("click", openCabinetModal);
   document.getElementById("openRegBtn")?.addEventListener("click", () => openModal("modalReg"));
   document.getElementById("openAddNewsBtn")?.addEventListener("click", () => openModal("modalAddNews"));
+  document.getElementById("addCategory")?.addEventListener("change", calcBillingTotal);
+}
+
+// ==========================================================================
+// ADD NEWS & BILLING IN CATALOG
+// ==========================================================================
+function simulatePhotoUpload() {
+  const dummyPhotos = [
+    "images/ads/renovation.jpg",
+    "images/ads/ceiling.jpg",
+    "images/ads/plumber.jpg"
+  ];
+  if (uploadedPhotos.length < 3) {
+    uploadedPhotos.push(dummyPhotos[uploadedPhotos.length]);
+    updatePhotoPreviews();
+    showToast(`Загружено фото ${uploadedPhotos.length}/10 (DLE xfields)`);
+  } else {
+    showToast("В демо-режиме можно загрузить до 3 фото");
+  }
+}
+
+function updatePhotoPreviews() {
+  const container = document.getElementById("photoPreviews");
+  if (!container) return;
+  container.innerHTML = uploadedPhotos.map((src, i) => `
+    <div class="upload-preview-item">
+      <img src="${src}" alt="Фото">
+      <button class="upload-preview-remove" onclick="removeUploadedPhoto(${i})">&times;</button>
+    </div>
+  `).join("");
+}
+
+function removeUploadedPhoto(index) {
+  uploadedPhotos.splice(index, 1);
+  updatePhotoPreviews();
+}
+
+function calcBillingTotal() {
+  let total = 0;
+  const cat = document.getElementById("addCategory")?.value;
+  if (cat === "Ремонт") total += 150;
+  if (cat === "Недвижимость") total += 200;
+
+  if (document.getElementById("billVip")?.checked) total += 290;
+  if (document.getElementById("billPin")?.checked) total += 490;
+  if (document.getElementById("billUp")?.checked) total += 99;
+
+  const totalSumEl = document.getElementById("billTotalSum");
+  if (totalSumEl) totalSumEl.textContent = `${total} ₽`;
+  return total;
+}
+
+function submitNewAd() {
+  const title = document.getElementById("addTitle")?.value.trim() || "";
+  const price = document.getElementById("addPrice")?.value.trim() || "";
+  const desc = document.getElementById("addDesc")?.value.trim() || "";
+  const category = document.getElementById("addCategory")?.value || "Ремонт";
+  const city = document.getElementById("addCity")?.value.trim() || "Москва, ЦАО";
+  const phone = document.getElementById("addPhone")?.value.trim() || "+7 (926) 450-22-18";
+  const video = document.getElementById("addVideo")?.value.trim() || "";
+  const isVip = document.getElementById("billVip")?.checked || false;
+  const totalCost = calcBillingTotal();
+
+  if (!title || !price || !desc) {
+    showToast("Пожалуйста, заполните заголовок, цену и описание.");
+    return;
+  }
+
+  // Auto-top-up if balance is insufficient
+  if (totalCost > userBalance) {
+    userBalance += (totalCost + 1000);
+    showToast(`Баланс автоматически пополнен бонусом dle-billing (+${totalCost + 1000} ₽)`);
+  }
+
+  userBalance -= totalCost;
+  updateUserBalanceDisplay();
+
+  const priceNum = parseFloat(price.replace(/[^\d]/g, "")) || 1500;
+
+  const newAd = {
+    id: Date.now(),
+    title: title,
+    category: category,
+    price: price.includes("₽") ? price : `${price} ₽`,
+    priceNum: priceNum,
+    priceUnit: "за услугу",
+    desc: desc,
+    images: uploadedPhotos.length > 0 ? [...uploadedPhotos] : [
+      "images/ads/renovation.jpg"
+    ],
+    hasVideo: !!video,
+    videoUrl: video,
+    sellerName: "Мой профиль",
+    sellerRole: userRole === 'seller' ? "Рекламодатель" : "Частный мастер",
+    rating: 5.0,
+    reviewsCount: 1,
+    isAdvertiser: userRole === 'seller',
+    isVip: isVip,
+    city: city || "Москва",
+    phoneMasked: "+7 (926) •••-••-18",
+    phoneFull: phone,
+    date: "Только что"
+  };
+
+  adsDatabase.unshift(newAd);
+
+  // Persist to localStorage
+  try {
+    const customAds = JSON.parse(localStorage.getItem("profium_custom_ads") || "[]");
+    customAds.unshift(newAd);
+    localStorage.setItem("profium_custom_ads", JSON.stringify(customAds));
+  } catch (e) {
+    console.error("Failed to save ad to localStorage:", e);
+  }
+
+  applyCatalogFilters();
+
+  closeModal("modalAddNews");
+  showToast(`✓ Объявление опубликовано! ${isVip ? '(VIP статус активирован)' : ''}`);
+
+  if (document.getElementById("addTitle")) document.getElementById("addTitle").value = "";
+  if (document.getElementById("addPrice")) document.getElementById("addPrice").value = "";
+  if (document.getElementById("addDesc")) document.getElementById("addDesc").value = "";
+  if (document.getElementById("billVip")) document.getElementById("billVip").checked = false;
+  if (document.getElementById("billPin")) document.getElementById("billPin").checked = false;
+  if (document.getElementById("billUp")) document.getElementById("billUp").checked = false;
+  uploadedPhotos = [];
+  updatePhotoPreviews();
+  calcBillingTotal();
+
+  // Scroll to catalog top
+  document.getElementById("catalogContainer")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }

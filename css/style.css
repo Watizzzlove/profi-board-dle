@@ -846,7 +846,7 @@ input, textarea, select {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
   cursor: pointer;
   position: relative;
   box-shadow: none; /* No dirty shadows! */
@@ -859,19 +859,59 @@ input, textarea, select {
   box-shadow: none;
 }
 
+/* VIP Cards: Pale warm pastel yellow background (#fef3c7), NO border by default */
 .ad-card--vip {
-  border-color: #fcd34d;
-  box-shadow: none;
+  background-color: #fef3c7 !important;
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
+}
+
+.ad-card--vip:hover {
+  border-color: #f59e0b !important; /* Border appears only on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.16) !important;
 }
 
 .ad-card__media {
   position: relative;
   width: 100%;
   padding-top: 62%;
-  background-color: var(--bg-subtle);
+  background-color: #f1f5f9;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.ad-card--vip .ad-card__media {
+  background-color: #fde68a !important; /* Pale warm amber media placeholder */
+}
+
+/* Photo watermark placeholder when photo is hidden */
+.ad-card__media::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z'/%3E%3Ccircle cx='12' cy='13' r='4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ad-card--vip .ad-card__media::before {
+  filter: sepia(1) hue-rotate(350deg);
+  opacity: 0.45;
+}
+
+/* Photo completely hidden by default, appears ONLY on hover */
 .ad-card__img {
   position: absolute;
   top: 0;
@@ -879,11 +919,18 @@ input, textarea, select {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.4s ease;
+  z-index: 2;
 }
 
 .ad-card:hover .ad-card__img {
+  opacity: 1;
   transform: scale(1.03);
+}
+
+.ad-card:hover .ad-card__media::before {
+  opacity: 0;
 }
 
 /* Prominent Play Button for video cards */
@@ -2442,7 +2489,7 @@ input, textarea, select {
   box-shadow: none; /* No dirty shadows! */
   overflow: hidden;
   display: flex;
-  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
   cursor: pointer;
   position: relative;
 }
@@ -2452,28 +2499,75 @@ input, textarea, select {
   transform: translateY(-2px);
 }
 
+/* VIP Cards in catalog: Pale warm pastel yellow background (#fef3c7), NO border by default */
 .ad-card-horizontal.ad-card--vip {
-  border-color: #fcd34d;
+  background-color: #fef3c7 !important;
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
+}
+
+.ad-card-horizontal.ad-card--vip:hover {
+  border-color: #f59e0b !important; /* Border appears only on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.16) !important;
 }
 
 .ad-card-horizontal__media {
   width: 250px;
   min-width: 250px;
   position: relative;
-  background-color: var(--bg-subtle);
+  background-color: #f1f5f9;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.ad-card-horizontal.ad-card--vip .ad-card-horizontal__media {
+  background-color: #fde68a !important; /* Pale warm amber media placeholder */
+}
+
+.ad-card-horizontal__media::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z'/%3E%3Ccircle cx='12' cy='13' r='4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ad-card-horizontal.ad-card--vip .ad-card-horizontal__media::before {
+  filter: sepia(1) hue-rotate(350deg);
+  opacity: 0.45;
+}
+
+/* Photo completely hidden by default, appears ONLY on hover */
 .ad-card-horizontal__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.35s ease;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  z-index: 2;
 }
 
 .ad-card-horizontal:hover .ad-card-horizontal__img {
+  opacity: 1;
   transform: scale(1.04);
+}
+
+.ad-card-horizontal:hover .ad-card-horizontal__media::before {
+  opacity: 0;
 }
 
 .ad-card-horizontal__badges {
@@ -2748,18 +2842,19 @@ input, textarea, select {
 }
 
 /* ==========================================================================
-   VAULT-BOY STYLE ADVANTAGES BANNER (ALL-IN-ONE CARD)
+   VAULT-BOY STYLE ADVANTAGES BANNER (ALL-IN-ONE CARD) - BRAND GREEN
    ========================================================================== */
 .vault-banner {
-  background: #ffffff;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
   border-radius: var(--radius-lg);
   padding: 38px 48px;
   display: flex;
   align-items: center;
   gap: 52px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 14px 36px rgba(16, 185, 129, 0.25) !important;
   position: relative;
   overflow: hidden;
+  color: #ffffff !important;
 }
 
 .vault-banner__character {
@@ -2775,6 +2870,7 @@ input, textarea, select {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -2788,21 +2884,23 @@ input, textarea, select {
 
 .vault-banner__tag {
   display: inline-block;
-  padding: 4px 12px;
+  padding: 4px 14px;
   border-radius: var(--radius-pill);
-  background: var(--primary-soft);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
+  backdrop-filter: blur(6px);
 }
 
 .vault-banner__title {
   font-size: 23px;
   font-weight: 700;
-  color: var(--text-main);
+  color: #ffffff !important;
   margin-bottom: 22px;
   letter-spacing: -0.4px;
 }
@@ -2819,29 +2917,31 @@ input, textarea, select {
 }
 
 .vault-feature__badge {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 9px;
-  background: var(--primary-soft);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 13px;
   font-weight: 800;
   flex-shrink: 0;
+  backdrop-filter: blur(6px);
 }
 
 .vault-feature__title {
   font-size: 15px;
   font-weight: 700;
-  color: var(--text-main);
+  color: #ffffff !important;
   margin-bottom: 4px;
 }
 
 .vault-feature__desc {
   font-size: 13px;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.9) !important;
   line-height: 1.45;
 }
 
