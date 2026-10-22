@@ -347,7 +347,7 @@ input, textarea, select {
    ========================================================================== */
 .hero {
   background-color: var(--bg-surface);
-  padding: 84px 0 54px; /* Generous top breathing room from header */
+  padding: 80px 0 54px; /* Generous top breathing room from header */
   border-bottom: 1px solid var(--border-light);
   position: relative;
   overflow: hidden;
@@ -356,10 +356,10 @@ input, textarea, select {
 /* Mascot as background graphic pinned directly against the right screen edge */
 .hero__mascot-edge {
   position: absolute;
-  right: 0;
+  right: -25px;
   bottom: 0;
-  width: 400px;
-  height: 380px;
+  width: 550px;
+  height: 420px;
   z-index: 1; /* Graphic behind content */
   pointer-events: none;
   display: flex;
@@ -392,82 +392,88 @@ input, textarea, select {
 }
 
 .hero__headline {
-  font-size: 38px;
+  font-size: 52px;
   font-weight: 700;
-  letter-spacing: -0.8px;
-  margin-bottom: 30px;
+  letter-spacing: -1.2px;
+  line-height: 1.15;
+  margin-bottom: 32px;
   color: var(--text-main);
-  max-width: 720px;
+  max-width: 100%; /* Spans full width of container */
 }
 
 .hero__headline span {
   color: var(--primary);
 }
 
-/* 2 Separate containers: Input box + Standalone Search button */
+/* 2 Separate containers: Input box + Standalone Search button in 1 ROW */
 .search-wrapper {
   display: flex;
   align-items: center;
   gap: 12px;
   position: relative;
   z-index: 6;
+  width: 100%;
 }
 
 .search-input-box {
   flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   background-color: var(--bg-subtle); /* Container 1: Grey filled input */
   border-radius: 16px;
-  padding: 0 20px;
-  height: 60px;
-  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+  padding: 0 22px;
+  height: 64px; /* Thick, comfortable height */
+  border: 1px solid transparent;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .search-input-box:focus-within {
   background-color: #fff;
-  box-shadow: 0 0 0 2.5px var(--primary);
-}
-
-.search-input-box__icon {
-  color: var(--text-muted);
-  margin-right: 14px;
-  display: flex;
-  align-items: center;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(27, 183, 110, 0.18);
 }
 
 .search-input-box__input {
-  flex: 1;
+  width: 100%;
+  height: 100%;
   border: none;
   background: transparent;
   outline: none;
   font-size: 16px;
+  font-weight: 500;
   color: var(--text-main);
+  padding: 0;
 }
 
 .search-input-box__input::placeholder {
-  color: var(--text-muted);
+  color: #94a3b8;
+  font-weight: 400;
 }
 
-/* Container 2: Standalone Search button */
+/* Container 2: Green square button with magnifying glass */
 .btn--search-standalone {
-  height: 60px;
-  padding: 0 36px;
+  width: 64px;
+  height: 64px;
+  padding: 0;
   background-color: var(--primary);
-  color: #fff;
-  font-size: 16px;
-  font-weight: 600;
+  color: #ffffff;
   border-radius: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  box-shadow: 0 0 0 2px #ffffff, 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
   cursor: pointer;
   flex-shrink: 0;
+  border: none;
 }
 
 .btn--search-standalone:hover {
   background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 2px #ffffff, 0 6px 18px rgba(0, 0, 0, 0.16);
+}
   transform: translateY(-1px);
 }
 
@@ -1458,30 +1464,33 @@ input, textarea, select {
     max-width: 100%;
   }
   .hero__headline {
-    font-size: 24px;
-    letter-spacing: -0.4px;
-    line-height: 1.25;
-    margin-bottom: 18px;
-    max-width: 230px; /* Leaves clear space for mascot on the right */
+    font-size: 28px;
+    letter-spacing: -0.6px;
+    line-height: 1.2;
+    margin-bottom: 22px;
+    max-width: 100%; /* Spans across full width of screen as requested */
   }
   .hero__mascot-edge {
-    width: 140px;
-    height: 140px;
+    width: 220px;
+    height: 180px;
     bottom: 0;
     right: 0;
-    opacity: 0.92;
+    opacity: 0.95;
   }
+  /* In 1 single row on mobile: thick gray input plate + square green search button */
   .search-wrapper {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
     gap: 8px;
     width: 100%;
     position: relative;
     z-index: 10;
   }
   .search-input-box {
-    width: 100%;
-    height: 52px;
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    height: 56px; /* Thick, comfortable touch target */
     padding: 0 16px;
     border-radius: 14px;
   }
@@ -1489,11 +1498,12 @@ input, textarea, select {
     font-size: 14.5px;
   }
   .btn--search-standalone {
-    width: 100%;
-    height: 48px;
-    font-size: 15px;
+    width: 56px;
+    height: 56px;
     border-radius: 14px;
-    padding: 0 20px;
+    padding: 0;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px #ffffff, 0 3px 10px rgba(0, 0, 0, 0.1);
   }
   
   /* Mobile Popular Queries: collapsed by default, cleanly expands when search input is focused */
