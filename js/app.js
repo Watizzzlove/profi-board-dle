@@ -143,6 +143,22 @@ function getFallbackImage(category, title, adId) {
   return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"><rect width="100%" height="100%" fill="%23f0f2f5"/><text x="50%" y="50%" font-family="sans-serif" font-size="28" font-weight="700" fill="%231bb76e" text-anchor="middle">${category}</text></svg>`;
 }
 
+// Rating Badge Generator with color indicator:
+// > 4.5: Green | 3.7 - 4.5: Yellow | < 3.7: Red
+function getRatingBadgeHtml(rating, reviewsCount) {
+  let colorClass = "green";
+  if (rating < 3.7) {
+    colorClass = "red";
+  } else if (rating < 4.5) {
+    colorClass = "yellow";
+  }
+  return `
+    <span class="rating-badge rating-badge--${colorClass}" title="Рейтинг: ${rating.toFixed(1)}">
+      ★ ${rating.toFixed(1)}${reviewsCount ? ` <span class="rating-badge__count">(${reviewsCount})</span>` : ''}
+    </span>
+  `;
+}
+
 // Initial Mock Database (Local 100% reliable files in images/ads/)
 let adsDatabase = [
   {
@@ -159,6 +175,8 @@ let adsDatabase = [
     videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     sellerName: "СК «МосСтройГрупп»",
     sellerRole: "Рекламодатель",
+    rating: 4.9,
+    reviewsCount: 42,
     isAdvertiser: true,
     isVip: true,
     isPinned: true,
@@ -180,6 +198,8 @@ let adsDatabase = [
     hasVideo: false,
     sellerName: "Андрей Николаевич",
     sellerRole: "Частный мастер",
+    rating: 4.8,
+    reviewsCount: 31,
     isAdvertiser: false,
     isVip: false,
     city: "Москва, САО и Химки",
@@ -200,6 +220,8 @@ let adsDatabase = [
     hasVideo: false,
     sellerName: "ТК «Столичный Переезд»",
     sellerRole: "Рекламодатель",
+    rating: 4.1, /* Yellow rating example (3.7 - 4.5) */
+    reviewsCount: 19,
     isAdvertiser: true,
     isVip: true,
     city: "Москва и МО (Балашиха, Мытищи)",
@@ -220,6 +242,8 @@ let adsDatabase = [
     hasVideo: false,
     sellerName: "Елена Васильевна",
     sellerRole: "Частный репетитор",
+    rating: 5.0,
+    reviewsCount: 56,
     isAdvertiser: false,
     isVip: false,
     city: "Москва (ЮЗАО) и онлайн",
@@ -241,6 +265,8 @@ let adsDatabase = [
     videoUrl: "https://rutube.ru/video/demo",
     sellerName: "Компания «ПотолокЭлит»",
     sellerRole: "Рекламодатель",
+    rating: 3.4, /* Red rating example (< 3.7) */
+    reviewsCount: 11,
     isAdvertiser: true,
     isVip: false,
     city: "Москва, Красногорск, Одинцово",
@@ -261,6 +287,8 @@ let adsDatabase = [
     hasVideo: false,
     sellerName: "Мастер Сергей",
     sellerRole: "Частный мастер",
+    rating: 4.7,
+    reviewsCount: 23,
     isAdvertiser: false,
     isVip: false,
     city: "Москва, Подольск, Щербинка",
@@ -338,7 +366,10 @@ function renderListings(ads) {
           </div>
           <div class="ad-card__seller-info">
             <div class="ad-card__seller-name">${ad.sellerName}</div>
-            <div class="ad-card__seller-role">${ad.sellerRole}</div>
+            <div class="ad-card__seller-role" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span>${ad.sellerRole}</span>
+              ${getRatingBadgeHtml(ad.rating, ad.reviewsCount)}
+            </div>
           </div>
         </div>
 
@@ -500,42 +531,54 @@ function openAdDetail(adId) {
   callBtn.textContent = "Показать телефон";
 
   bodyEl.innerHTML = `
-    <div style="margin-bottom: 24px;">
-      <div style="border-radius: var(--radius-md); overflow: hidden; height: 350px; background: #000; position: relative;">
+    <div style="margin-bottom: 20px;">
+      <div class="detail-media-wrap">
         <img src="${ad.images[0]}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
-        ${ad.isVip ? '<span class="badge badge--vip" style="position: absolute; top: 16px; left: 16px;">VIP ОБЪЯВЛЕНИЕ</span>' : ''}
+        ${ad.isVip ? '<span class="badge badge--vip" style="position: absolute; top: 12px; left: 12px;">VIP ОБЪЯВЛЕНИЕ</span>' : ''}
       </div>
     </div>
 
     ${ad.hasVideo ? `
-      <div style="background: var(--primary-soft); border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 14px;">
-          <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px;">▶</div>
+      <div style="background: var(--primary-soft); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">▶</div>
           <div>
-            <div style="font-size: 15px; font-weight: 700; color: var(--primary-dark);">К объявлению прикреплен видеоролик (DLE xfields)</div>
-            <div style="font-size: 13px; color: var(--text-secondary);">${ad.videoUrl || 'Видео загружено автором'}</div>
+            <div style="font-size: 14.5px; font-weight: 700; color: var(--primary-dark);">К объявлению прикреплен видеоролик (DLE xfields)</div>
+            <div style="font-size: 12.5px; color: var(--text-secondary);">${ad.videoUrl || 'Видео загружено автором'}</div>
           </div>
         </div>
-        <button class="btn btn--primary" style="font-size: 13.5px; padding: 8px 18px;" onclick="window.open('https://youtube.com', '_blank')">Смотреть видео</button>
+        <button class="btn btn--primary" style="font-size: 13px; padding: 7px 16px;" onclick="window.open('https://youtube.com', '_blank')">Смотреть видео</button>
       </div>
     ` : ''}
 
-    <div style="font-size: 28px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">
-      ${ad.price} <span style="font-size: 16px; font-weight: normal; color: var(--text-muted);">${ad.priceUnit || ''}</span>
+    <div style="font-size: 26px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">
+      ${ad.price} <span style="font-size: 15px; font-weight: normal; color: var(--text-muted);">${ad.priceUnit || ''}</span>
     </div>
 
-    <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
+    <div style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
       Категория: <strong>${ad.category}</strong> • ${ad.city} • Опубликовано: ${ad.date}
     </div>
 
-    <div style="font-size: 15px; line-height: 1.65; color: var(--text-secondary); border-top: 1px solid var(--border-light); padding-top: 20px;">
+    <div style="font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); border-top: 1px solid var(--border-light); padding-top: 16px;">
       ${ad.desc}
     </div>
   `;
 
   authorBlock.innerHTML = `
-    <div>Автор: <strong>${ad.sellerName}</strong> (${ad.sellerRole})</div>
-    <div style="font-size: 12.5px; color: var(--text-muted);">На платформе с 2025 года • Рейтинг 4.9 ★★★★★</div>
+    <div class="detail-author">
+      <div class="detail-author__avatar">
+        ${ad.sellerName.charAt(0)}
+      </div>
+      <div class="detail-author__info">
+        <div class="detail-author__name">
+          ${ad.sellerName} <span class="detail-author__role">(${ad.sellerRole})</span>
+        </div>
+        <div class="detail-author__meta">
+          ${getRatingBadgeHtml(ad.rating, ad.reviewsCount)}
+          <span class="detail-author__tenure">• На платформе с 2024 года</span>
+        </div>
+      </div>
+    </div>
   `;
 
   openModal("modalAdDetail");

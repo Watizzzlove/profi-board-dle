@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Профиум — Сервис проверенных специалистов и объявлений (DLE 19/20)</title>
-  <link rel="stylesheet" href="css/style.css?v=3.0">
+  <link rel="stylesheet" href="css/style.css?v=3.1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -46,12 +46,20 @@
         </button>
       </div>
 
-      <!-- Mobile Hamburger Toggle Button -->
-      <button class="header__burger" id="burgerToggleBtn" aria-label="Открыть мобильное меню" onclick="toggleMobileMenu(true)">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <!-- Mobile Right Actions: Green Geo Square Button + Burger Toggle -->
+      <div class="header__mobile-actions">
+        <button class="header__geo-mobile-btn" onclick="openModal('modalRegion')" title="Сменить регион" aria-label="Сменить регион">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </button>
+        <button class="header__burger" id="burgerToggleBtn" aria-label="Открыть мобильное меню" onclick="toggleMobileMenu(true)">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -67,11 +75,6 @@
         <button class="modal__close" onclick="toggleMobileMenu(false)">&times;</button>
       </div>
       <div class="mobile-drawer__body">
-        <div class="mobile-drawer__geo" onclick="openModal('modalRegion'); toggleMobileMenu(false);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span id="mobileCityText">Москва</span>
-          <span style="margin-left: auto; font-size: 13px; color: var(--primary); font-weight: 600;">Сменить</span>
-        </div>
         <nav class="mobile-drawer__nav">
           <a href="catalog.html" class="mobile-nav-item">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
@@ -684,17 +687,18 @@
 
   <!-- 4. DETAIL AD VIEW -->
   <div class="modal-overlay" id="modalAdDetail">
-    <div class="modal modal--large">
-      <div class="modal__header">
+    <div class="modal modal--large modal--ad-detail">
+      <button class="modal__close detail-modal__close" onclick="closeModal('modalAdDetail')" aria-label="Закрыть">✕</button>
+
+      <div class="modal__header detail-modal__header">
         <div class="modal__title" id="detailModalTitle">Просмотр объявления</div>
-        <button class="modal__close" onclick="closeModal('modalAdDetail')">✕</button>
       </div>
 
-      <div class="modal__body" id="detailModalBody"></div>
+      <div class="modal__body detail-modal__body" id="detailModalBody"></div>
 
-      <div class="modal__footer" style="justify-content: space-between;">
-        <div id="detailAuthorBlock" style="font-size: 13.5px; color: var(--text-secondary);"></div>
-        <div style="display: flex; gap: 12px;">
+      <div class="modal__footer detail-modal__footer">
+        <div class="detail-author-box" id="detailAuthorBlock"></div>
+        <div class="detail-actions-box">
           <button class="btn btn--outline" id="detailPromoBtn" onclick="openPromoFromDetail()">
             ⚡ Продвинуть (VIP)
           </button>
@@ -746,6 +750,6 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Scripts -->
-  <script src="js/app.js?v=3.0"></script>
+  <script src="js/app.js?v=3.1"></script>
 </body>
 </html>
