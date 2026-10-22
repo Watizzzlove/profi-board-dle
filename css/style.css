@@ -911,7 +911,7 @@ input, textarea, select {
   opacity: 0.45;
 }
 
-/* Photo completely hidden by default, appears ONLY on hover */
+/* Photo visible by default, smooth zoom on hover */
 .ad-card__img {
   position: absolute;
   top: 0;
@@ -919,14 +919,13 @@ input, textarea, select {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.35s ease, transform 0.4s ease;
+  opacity: 1;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 2;
 }
 
 .ad-card:hover .ad-card__img {
-  opacity: 1;
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .ad-card:hover .ad-card__media::before {
@@ -2550,20 +2549,19 @@ input, textarea, select {
   opacity: 0.45;
 }
 
-/* Photo completely hidden by default, appears ONLY on hover */
+/* Photo visible by default, smooth zoom on hover */
 .ad-card-horizontal__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  opacity: 0;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  opacity: 1;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 2;
 }
 
 .ad-card-horizontal:hover .ad-card-horizontal__img {
-  opacity: 1;
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .ad-card-horizontal:hover .ad-card-horizontal__media::before {
