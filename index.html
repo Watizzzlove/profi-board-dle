@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ПрофиДоска — Каталог специалистов и объявлений (DLE 19/20)</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    <div class="container header__inner">
+      <div class="header__left">
+        <a href="#" class="header__logo" onclick="resetFilters(); return false;">
+          ПрофиДоска<span class="header__logo-dot"></span>
+        </a>
+        <div class="header__geo" id="geoBtn" onclick="openModal('modalRegion')" title="Сменить регион">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="currentCity">Москва</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <div class="header__right">
+        <button class="btn btn--outline" id="openCabinetBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="userStatusText">Кабинет & Баланс</span>
+        </button>
+
+        <button class="btn btn--ghost" id="openRegBtn">
+          Регистрация
+        </button>
+
+        <button class="btn btn--primary" id="openAddNewsBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Подать объявление
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO & SEARCH (SOLID FILLED AS ON PROFI.RU) ================= -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero__headline">
+        Объявления и специалисты <span id="heroCitySpan">в Москве и области</span>
+      </h1>
+
+      <!-- 2 Separate Containers: Input Box + Standalone Search Button -->
+      <div class="search-wrapper">
+        <div class="search-input-box">
+          <div class="search-input-box__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <input type="text" class="search-input-box__input" id="searchInput" placeholder="Какую услугу или специалиста вы ищете? Например, ремонт кухни, автосервис, репетитор...">
+        </div>
+        <button class="btn btn--search-standalone" id="searchSubmitBtn">Найти</button>
+      </div>
+
+      <div class="search-tags">
+        <span class="search-tags__title">Популярные запросы:</span>
+        <span class="tag-chip" onclick="applySearchTag('Ремонт квартир')">Ремонт квартир</span>
+        <span class="tag-chip" onclick="applySearchTag('Автоэлектрик')">Автоэлектрик</span>
+        <span class="tag-chip" onclick="applySearchTag('Сантехник')">Сантехник</span>
+        <span class="tag-chip" onclick="applySearchTag('Грузоперевозки')">Грузоперевозки</span>
+        <span class="tag-chip" onclick="applySearchTag('Репетитор')">Репетитор ЕГЭ</span>
+        <span class="tag-chip" onclick="applySearchTag('Клининг')">Генеральная уборка</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BENTO CATEGORIES (PASTEL COLORS + PHOTO/CUTOUT COMPOSITIONS) ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section__header">
+        <div class="section__title-wrap">
+          <h2 class="section__title">Категории услуг</h2>
+          <span class="section__counter">6 основных направлений</span>
+        </div>
+        <a href="#" class="section__link" onclick="filterByCategory('all'); return false;">Все категории (24) →</a>
+      </div>
+
+      <div class="bento-grid">
+        <!-- 1. Ремонт (Бежевый пастельный) -->
+        <div class="bento-card bento-card--beige" onclick="filterByCategory('Ремонт')">
+          <div class="bento-card__content">
+            <div class="bento-card__title">Ремонт и отделка помещений</div>
+            <div class="bento-card__sub">Квартиры, сантехника, электрика, плитка под ключ</div>
+            <div class="bento-card__count">2 480 объявлений</div>
+          </div>
+          <div class="bento-card__img-wrap">
+            <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Modern ladder & roller composition -->
+              <rect x="25" y="15" width="8" height="95" rx="3" fill="#8c6d48"/>
+              <rect x="55" y="15" width="8" height="95" rx="3" fill="#8c6d48"/>
+              <rect x="25" y="35" width="38" height="6" rx="2" fill="#d4b896"/>
+              <rect x="25" y="55" width="38" height="6" rx="2" fill="#d4b896"/>
+              <rect x="25" y="75" width="38" height="6" rx="2" fill="#d4b896"/>
+              <rect x="25" y="95" width="38" height="6" rx="2" fill="#d4b896"/>
+              <!-- Paint Roller -->
+              <rect x="65" y="30" width="40" height="22" rx="6" fill="#286e49"/>
+              <path d="M85 52V68C85 72 82 76 78 76H72V98" stroke="#5a6572" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="98" cy="88" r="14" fill="#d4a373" fill-opacity="0.3"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 2. Авто (Серо-голубой пастельный) -->
+        <div class="bento-card bento-card--blue" onclick="filterByCategory('Авто')">
+          <div class="bento-card__content">
+            <div class="bento-card__title">Авто и спецтехника</div>
+            <div class="bento-card__sub">Диагностика, ремонт ходовой, кузовной цех, шиномонтаж</div>
+            <div class="bento-card__count">1 340 объявлений</div>
+          </div>
+          <div class="bento-card__img-wrap">
+            <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Modern car & wheel silhouette -->
+              <circle cx="60" cy="65" r="38" fill="#cbdde9"/>
+              <circle cx="60" cy="65" r="26" stroke="#4a6984" stroke-width="6"/>
+              <circle cx="60" cy="65" r="10" fill="#286e49"/>
+              <path d="M60 40V55M60 75V90M35 65H50M70 65H85" stroke="#4a6984" stroke-width="4" stroke-linecap="round"/>
+              <path d="M82 32L96 18C99 15 104 15 107 18L108 19C111 22 111 27 108 30L94 44" stroke="#5a6572" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 3. Перевозки (Песочный крафт) -->
+        <div class="bento-card bento-card--sand" onclick="filterByCategory('Грузоперевозки')">
+          <div class="bento-card__content">
+            <div class="bento-card__title">Перевозки и грузчики</div>
+            <div class="bento-card__sub">Газели, переезды квартир и офисов, такелаж</div>
+            <div class="bento-card__count">860 объявлений</div>
+          </div>
+          <div class="bento-card__img-wrap">
+            <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Boxes & cargo van elements -->
+              <rect x="25" y="45" width="46" height="46" rx="4" fill="#d9b68c"/>
+              <path d="M25 65H71M48 45V91" stroke="#b08b5e" stroke-width="3"/>
+              <rect x="55" y="30" width="48" height="48" rx="4" fill="#c9a377"/>
+              <path d="M55 52H103M79 30V78" stroke="#9c784e" stroke-width="3"/>
+              <circle cx="85" cy="92" r="14" fill="#8c6d48" fill-opacity="0.2"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 4. Обучение (Лавандовый пастельный) -->
+        <div class="bento-card bento-card--lavender" onclick="filterByCategory('Обучение')">
+          <div class="bento-card__content">
+            <div class="bento-card__title">Обучение и репетиторы</div>
+            <div class="bento-card__sub">Подготовка к ОГЭ/ЕГЭ, иностранные языки, музыка</div>
+            <div class="bento-card__count">620 специалистов</div>
+          </div>
+          <div class="bento-card__img-wrap">
+            <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Book stack & cap -->
+              <rect x="30" y="70" width="65" height="16" rx="3" fill="#8e73a3"/>
+              <rect x="25" y="50" width="70" height="16" rx="3" fill="#aa93be"/>
+              <rect x="35" y="30" width="55" height="16" rx="3" fill="#286e49"/>
+              <path d="M20 25L60 10L100 25L60 40L20 25Z" fill="#583f70"/>
+              <line x1="90" y1="28" x2="90" y2="52" stroke="#d4b896" stroke-width="3"/>
+              <circle cx="90" cy="54" r="3" fill="#d4b896"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 5. Недвижимость (Шалфейный пастельный) -->
+        <div class="bento-card bento-card--sage" onclick="filterByCategory('Недвижимость')">
+          <div class="bento-card__content">
+            <div class="bento-card__title">Аренда и недвижимость</div>
+            <div class="bento-card__sub">Квартиры, апартаменты, коммерческие помещения</div>
+            <div class="bento-card__count">1 920 предложений</div>
+          </div>
+          <div class="bento-card__img-wrap">
+            <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Modern cozy home & keys -->
+              <path d="M60 20L20 52V100H100V52L60 20Z" fill="#bcd7c7"/>
+              <path d="M60 20L100 52H20L60 20Z" fill="#286e49"/>
+              <rect x="48" y="65" width="24" height="35" rx="3" fill="#55886d"/>
+              <circle cx="68" cy="82" r="2.5" fill="#fff"/>
+              <rect x="32" y="58" width="14" height="14" rx="2" fill="#fff" fill-opacity="0.8"/>
+              <rect x="74" y="58" width="14" height="14" rx="2" fill="#fff" fill-opacity="0.8"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 6. Красота и здоровье (Пудрово-розовый) -->
+        <div class="bento-card bento-card--rose" onclick="filterByCategory('Красота')">
+          <div class="bento-card__content">
+            <div class="bento-card__title">Красота, клининг и уют</div>
+            <div class="bento-card__sub">Генеральная уборка, массаж, химчистка мебели</div>
+            <div class="bento-card__count">940 мастеров</div>
+          </div>
+          <div class="bento-card__img-wrap">
+            <svg class="bento-card__img" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Spa bottle & flower composition -->
+              <rect x="35" y="45" width="34" height="55" rx="8" fill="#d9998e"/>
+              <rect x="46" y="32" width="12" height="15" rx="2" fill="#a4685e"/>
+              <circle cx="52" cy="72" r="8" fill="#fff" fill-opacity="0.4"/>
+              <!-- Lotus / Leaf -->
+              <path d="M75 55C75 45 88 40 95 40C95 52 85 65 75 55Z" fill="#286e49"/>
+              <path d="M85 70C75 70 70 82 70 90C82 90 92 80 85 70Z" fill="#55886d"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LISTINGS FEED (SPACIOUS + MODERN TABS) ================= -->
+  <section class="section" style="padding-top: 20px;">
+    <div class="container">
+      <div class="section__header">
+        <div class="section__title-wrap">
+          <h2 class="section__title" id="feedTitle">Актуальные объявления</h2>
+          <span class="section__counter" id="listingsCountBadge">6 предложений</span>
+        </div>
+      </div>
+
+      <!-- Clean borderless pastel filter tabs -->
+      <div class="feed-tabs">
+        <button class="feed-tab feed-tab--all active" onclick="switchFeedTab('all', this)">Все предложения</button>
+        <button class="feed-tab feed-tab--vip" onclick="switchFeedTab('vip', this)">VIP предложения</button>
+        <button class="feed-tab feed-tab--video" onclick="switchFeedTab('video', this)">С видеообзором</button>
+        <button class="feed-tab feed-tab--adv" onclick="switchFeedTab('advertiser', this)">Рекламодатели и компании</button>
+        <button class="feed-tab feed-tab--private" onclick="switchFeedTab('private', this)">Частные мастера</button>
+      </div>
+
+      <!-- Ads Grid -->
+      <div class="listings-grid" id="listingsContainer">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER (ELEGANT 4-COLUMN) ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="header__logo" style="margin-bottom: 14px;">
+            ПрофиДоска<span class="header__logo-dot"></span>
+          </div>
+          <p style="font-size: 13.5px; line-height: 1.6; max-width: 320px; color: var(--text-secondary); margin-bottom: 20px;">
+            Современная доска объявлений и специалистов. Быстрый поиск проверенных мастеров, прозрачные цены и прямое общение без посредников.
+          </p>
+          <div class="footer__dle-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            Платформа DataLife Engine 19/20
+          </div>
+        </div>
+
+        <div>
+          <div class="footer__col-title">Каталог услуг</div>
+          <ul class="footer__list">
+            <li><a href="#" onclick="filterByCategory('Ремонт'); return false;">Ремонт и отделка</a></li>
+            <li><a href="#" onclick="filterByCategory('Авто'); return false;">Автосервис и диагностика</a></li>
+            <li><a href="#" onclick="filterByCategory('Грузоперевозки'); return false;">Перевозки и грузчики</a></li>
+            <li><a href="#" onclick="filterByCategory('Обучение'); return false;">Репетиторы и курсы</a></li>
+            <li><a href="#" onclick="filterByCategory('Недвижимость'); return false;">Аренда недвижимости</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer__col-title">Пользователям</div>
+          <ul class="footer__list">
+            <li><a href="#" onclick="openModal('modalAddNews'); return false;">Подать объявление</a></li>
+            <li><a href="#" onclick="openModal('modalReg'); return false;">Раздельная регистрация</a></li>
+            <li><a href="#" onclick="openModal('modalCabinet'); return false;">Платные услуги dle-billing</a></li>
+            <li><a href="#" onclick="showToast('Правила безопасности платформы'); return false;">Безопасные сделки</a></li>
+            <li><a href="#" onclick="showToast('Служба поддержки DLE'); return false;">Помощь и поддержка</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer__col-title">Регионы платформы</div>
+          <ul class="footer__list">
+            <li><a href="#" onclick="selectRegion('Москва'); return false;">г. Москва (ЦАО, ЗАО, САО)</a></li>
+            <li><a href="#" onclick="selectRegion('Химки'); return false;">Химки и Куркино</a></li>
+            <li><a href="#" onclick="selectRegion('Мытищи'); return false;">Мытищи и Королёв</a></li>
+            <li><a href="#" onclick="selectRegion('Балашиха'); return false;">Балашиха и Реутов</a></li>
+            <li><a href="#" onclick="selectRegion('Подольск'); return false;">Подольск и Щербинка</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div>© 2026 ПрофиДоска. Все права защищены. Разработано для DLE 19/20.</div>
+        <div style="display: flex; gap: 20px;">
+          <a href="#" onclick="showToast('Пользовательское соглашение'); return false;">Конфиденциальность</a>
+          <a href="#" onclick="showToast('Оферта сервиса'); return false;">Условия использования</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODALS
+       ========================================================================== -->
+
+  <!-- 1. MODAL: ВЫБОР РЕГИОНА / ГОРОДА -->
+  <div class="modal-overlay" id="modalRegion">
+    <div class="modal">
+      <div class="modal__header">
+        <div class="modal__title">Выберите город или регион</div>
+        <button class="modal__close" onclick="closeModal('modalRegion')">✕</button>
+      </div>
+      <div class="modal__body">
+        <div class="form-group">
+          <input type="text" class="form-input" id="regionSearchInput" placeholder="Введите название города (например: Химки)..." oninput="filterRegionsList(this.value)">
+        </div>
+
+        <div style="font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text-main);">Популярные регионы:</div>
+        <div class="region-chips">
+          <span class="region-chip active" onclick="selectRegion('Москва')">Москва</span>
+          <span class="region-chip" onclick="selectRegion('Химки')">Химки</span>
+          <span class="region-chip" onclick="selectRegion('Балашиха')">Балашиха</span>
+          <span class="region-chip" onclick="selectRegion('Мытищи')">Мытищи</span>
+          <span class="region-chip" onclick="selectRegion('Подольск')">Подольск</span>
+          <span class="region-chip" onclick="selectRegion('Красногорск')">Красногорск</span>
+        </div>
+
+        <div class="region-list" id="regionItemsList">
+          <div class="region-item active" onclick="selectRegion('Москва')">
+            <span>Москва и центр</span>
+            <span style="font-size: 12px; color: var(--text-muted);">4 820 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Химки')">
+            <span>Химки (Север МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">840 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Балашиха')">
+            <span>Балашиха (Восток МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">1 120 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Мытищи')">
+            <span>Мытищи (Северо-Восток МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">790 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Подольск')">
+            <span>Подольск (Юг МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">950 объявлений</span>
+          </div>
+          <div class="region-item" onclick="selectRegion('Красногорск')">
+            <span>Красногорск (Запад МО)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">680 объявлений</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--outline" onclick="closeModal('modalRegion')">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MODAL: ПОДАТЬ ОБЪЯВЛЕНИЕ (addnews.tpl) -->
+  <div class="modal-overlay" id="modalAddNews">
+    <div class="modal modal--large">
+      <div class="modal__header">
+        <div class="modal__title">Подача объявления в DLE (addnews.tpl)</div>
+        <button class="modal__close" onclick="closeModal('modalAddNews')">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <div class="form-group">
+          <label class="form-label">Заголовок объявления *</label>
+          <input type="text" id="addTitle" class="form-input" placeholder="Например: Качественный ремонт ванных комнат и санузлов">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="form-label">Категория (Дерево категорий DLE) *</label>
+            <select id="addCategory" class="form-select">
+              <option value="Ремонт">Ремонт и отделка (Платное: 150 ₽)</option>
+              <option value="Авто">Авто и спецтехника (Бесплатно)</option>
+              <option value="Грузоперевозки">Перевозки и грузчики (Бесплатно)</option>
+              <option value="Обучение">Обучение и репетиторы (Бесплатно)</option>
+              <option value="Недвижимость">Недвижимость (Платное: 200 ₽)</option>
+              <option value="Красота">Красота и клининг (Бесплатно)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Стоимость (xfield: price) *</label>
+            <input type="text" id="addPrice" class="form-input" placeholder="Например: 3 500 ₽ / м²">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Описание объявления *</label>
+          <textarea id="addDesc" class="form-textarea" placeholder="Опишите подробно опыт, используемые инструменты, сроки и гарантии..."></textarea>
+        </div>
+
+        <!-- Xfield: Photo Gallery -->
+        <div class="form-group">
+          <label class="form-label">Фотографии (нативный xfield: загрузка изображений DLE)</label>
+          <div class="dropzone" id="photoDropzone" onclick="simulatePhotoUpload()">
+            <div class="dropzone__icon">📷</div>
+            <div class="dropzone__text">Нажмите, чтобы прикрепить фото (или перетащите файлы)</div>
+            <div class="dropzone__sub">До 10 фото, авто-генерация превью WebP и водяные знаки DLE</div>
+          </div>
+          <div class="upload-previews" id="photoPreviews">
+            <!-- Thumbnails injected here -->
+          </div>
+        </div>
+
+        <!-- Xfield: Video URL -->
+        <div class="form-group">
+          <label class="form-label">Ссылка на видеообзор (xfield: video — YouTube / RuTube / VK)</label>
+          <input type="text" id="addVideo" class="form-input" placeholder="https://rutube.ru/video/... или https://youtube.com/watch?v=...">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="form-label">Город / Район *</label>
+            <input type="text" id="addCity" class="form-input" value="Москва, ЦАО">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Контактный телефон *</label>
+            <input type="text" id="addPhone" class="form-input" value="+7 (926) 450-22-18">
+          </div>
+        </div>
+
+        <!-- DLE-BILLING OPTIONS -->
+        <div class="billing-box">
+          <div class="billing-box__title">
+            <span>Платные услуги продвижения (Модуль dle-billing)</span>
+            <span style="font-size: 12px; color: var(--primary);">Списание с баланса</span>
+          </div>
+
+          <div class="billing-option">
+            <label class="billing-option__label">
+              <input type="checkbox" id="billVip" onchange="calcBillingTotal()">
+              <span><strong>VIP-статус</strong> — рамка, золотой бейдж и показ на главной</span>
+            </label>
+            <span class="billing-option__price">+290 ₽</span>
+          </div>
+
+          <div class="billing-option">
+            <label class="billing-option__label">
+              <input type="checkbox" id="billPin" onchange="calcBillingTotal()">
+              <span><strong>Закрепление в ТОПе</strong> категории на 7 дней</span>
+            </label>
+            <span class="billing-option__price">+490 ₽</span>
+          </div>
+
+          <div class="billing-option">
+            <label class="billing-option__label">
+              <input type="checkbox" id="billUp" onchange="calcBillingTotal()">
+              <span><strong>Поднятие на 1-е место</strong> сразу после публикации</span>
+            </label>
+            <span class="billing-option__price">+99 ₽</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-light);">
+            <span style="font-size: 14px; font-weight: 600;">Итого к оплате:</span>
+            <span id="billTotalSum" style="font-size: 17px; font-weight: 700; color: var(--primary);">0 ₽</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal__footer">
+        <button class="btn btn--outline" onclick="closeModal('modalAddNews')">Отмена</button>
+        <button class="btn btn--primary" id="publishAdBtn" onclick="submitNewAd()">
+          Опубликовать объявление
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. MODAL: РАЗДЕЛЬНАЯ РЕГИСТРАЦИЯ (registration.tpl) -->
+  <div class="modal-overlay" id="modalReg">
+    <div class="modal">
+      <div class="modal__header">
+        <div class="modal__title">Регистрация в DLE (Разделение ролей)</div>
+        <button class="modal__close" onclick="closeModal('modalReg')">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <div class="form-label" style="margin-bottom: 12px;">Выберите ваш статус на сайте:</div>
+        
+        <!-- Role switcher -->
+        <div class="role-toggle">
+          <div class="role-card active" id="roleClientCard" onclick="selectRole('client')">
+            <div class="role-card__title">
+              <span>👤</span> Я Клиент
+            </div>
+            <div class="role-card__desc">
+              Ищу мастеров и товары, сохраняю в избранное, пишу отзывы и сообщения
+            </div>
+          </div>
+
+          <div class="role-card" id="roleSellerCard" onclick="selectRole('seller')">
+            <div class="role-card__title">
+              <span>🏢</span> Я Рекламодатель
+            </div>
+            <div class="role-card__desc">
+              Публикую объявления, подключаю VIP-услуги, продвигаю бизнес в каталоге
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="companyFieldGroup" style="display: none;">
+          <label class="form-label">Название организации / Имя мастера *</label>
+          <input type="text" class="form-input" id="regCompany" placeholder="Например: ООО «СтройГрупп» или Мастер Алексей">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ваше имя / Логин *</label>
+          <input type="text" class="form-input" id="regLogin" placeholder="alex_moscow">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Электронная почта *</label>
+          <input type="email" class="form-input" id="regEmail" placeholder="name@example.ru">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Пароль *</label>
+          <input type="password" class="form-input" id="regPassword" placeholder="••••••••">
+        </div>
+
+        <div style="font-size: 12.5px; color: var(--text-muted); line-height: 1.45;">
+          При сохранении DLE плагин автоматически определит пользователя в системную группу <strong><span id="targetGroupName">«Клиенты» (ID 4)</span></strong>.
+        </div>
+      </div>
+
+      <div class="modal__footer">
+        <button class="btn btn--outline" onclick="closeModal('modalReg')">Закрыть</button>
+        <button class="btn btn--primary" onclick="submitRegistration()">Зарегистрироваться</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. MODAL: ПРОСМОТР ОБЪЯВЛЕНИЯ (fullstory.tpl) -->
+  <div class="modal-overlay" id="modalAdDetail">
+    <div class="modal modal--large">
+      <div class="modal__header">
+        <div class="modal__title" id="detailModalTitle">Просмотр объявления</div>
+        <button class="modal__close" onclick="closeModal('modalAdDetail')">✕</button>
+      </div>
+
+      <div class="modal__body" id="detailModalBody">
+        <!-- Injected via JS -->
+      </div>
+
+      <div class="modal__footer" style="justify-content: space-between;">
+        <div id="detailAuthorBlock" style="font-size: 13.5px; color: var(--text-secondary);">
+          <!-- Injected author info -->
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <button class="btn btn--outline" id="detailPromoBtn" onclick="openPromoFromDetail()">
+            ⚡ Продвинуть (VIP)
+          </button>
+          <button class="btn btn--primary" id="detailCallBtn" onclick="revealDetailPhone()">
+            Показать телефон
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. MODAL: КАБИНЕТ & БАЛАНС DLE-BILLING -->
+  <div class="modal-overlay" id="modalCabinet">
+    <div class="modal">
+      <div class="modal__header">
+        <div class="modal__title">Личный кабинет и dle-billing</div>
+        <button class="modal__close" onclick="closeModal('modalCabinet')">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px; background-color: var(--primary-soft); border-radius: var(--radius-md); margin-bottom: 24px;">
+          <div>
+            <div style="font-size: 12.5px; color: var(--primary); font-weight: 500;">Текущий баланс (dle-billing)</div>
+            <div style="font-size: 26px; font-weight: 700; color: var(--primary);" id="cabBalanceValue">1 450 ₽</div>
+          </div>
+          <button class="btn btn--primary" onclick="simulateTopUp()">
+            + Пополнить счет
+          </button>
+        </div>
+
+        <div style="font-size: 14.5px; font-weight: 600; margin-bottom: 14px; color: var(--text-main);">
+          Мои объявления на доске:
+        </div>
+
+        <div id="userAdsList" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Injected via JS -->
+        </div>
+
+        <div style="margin-top: 24px; padding: 14px; border-radius: var(--radius-md); background: #f0f7f2; font-size: 12.5px; color: #1f583a; line-height: 1.5;">
+          💡 <strong>Как это устроено в DLE:</strong> Баланс хранится в таблице `dle_billing_users`. Списание за размещение и VIP-статус происходит через нативные транзакции биллинга.
+        </div>
+      </div>
+
+      <div class="modal__footer">
+        <button class="btn btn--outline" onclick="closeModal('modalCabinet')">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>
